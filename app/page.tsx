@@ -72,7 +72,7 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-[#F1F3F7] px-4 py-4 md:px-5 md:py-5 lg:px-6 lg:py-6">
 
       {/* Header */}
-      <div className="flex items-start justify-between mb-6 gap-4">
+      <div className="flex flex-col gap-3 mb-6 min-[640px]:flex-row min-[640px]:items-start min-[640px]:justify-between">
         <div>
           <h1 className="text-[#1E293B] font-extrabold text-[22px] lg:text-[28px] leading-tight">
             Dashboard
@@ -83,7 +83,7 @@ export default function DashboardPage() {
         </div>
         <button
           onClick={() => router.push("/novo-campeonato")}
-          className="flex items-center gap-2 bg-[#4F6BED] hover:bg-[#3D5BD9] text-white font-semibold text-[14px] px-5 py-2.5 rounded-[10px] transition-colors shrink-0"
+          className="flex items-center justify-center gap-2 bg-[#4F6BED] hover:bg-[#3D5BD9] text-white font-semibold text-[14px] px-5 py-2.5 rounded-[10px] transition-colors self-start min-[640px]:self-auto min-[640px]:shrink-0"
         >
           <Trophy size={16} color="#FFFFFF" />
           Novo Campeonato

@@ -263,7 +263,7 @@ export default function TimesPage() {
     <div className="min-h-screen bg-[#F1F3F7] px-4 py-4 md:px-5 md:py-5 lg:px-6 lg:py-6">
 
       {/* Header */}
-      <div className="flex items-start justify-between mb-6 gap-4">
+      <div className="flex flex-col gap-3 mb-6 min-[640px]:flex-row min-[640px]:items-start min-[640px]:justify-between">
         <div>
           <h1 className="text-[#1E293B] font-extrabold text-[22px] lg:text-[28px] leading-tight">
             Times
@@ -274,7 +274,7 @@ export default function TimesPage() {
         </div>
         <button
           onClick={() => setShowForm(true)}
-          className="flex items-center gap-2 bg-[#4F6BED] hover:bg-[#3D5BD9] text-white font-semibold text-[14px] px-5 py-2.5 rounded-[10px] transition-colors shrink-0"
+          className="flex items-center justify-center gap-2 bg-[#4F6BED] hover:bg-[#3D5BD9] text-white font-semibold text-[14px] px-5 py-2.5 rounded-[10px] transition-colors self-start min-[640px]:self-auto min-[640px]:shrink-0"
         >
           <Plus size={16} color="#FFFFFF" />
           Novo Time
@@ -335,22 +335,22 @@ export default function TimesPage() {
 
               {/* Botões */}
               <div className="flex items-center gap-2 pt-1 border-t border-[#E5E7EB] mt-auto">
-                {/* Ver Time — navega pra página do time */}
+                {/* Ver Time */}
                 <button
                   onClick={() => router.push(`/times/${t.id}`)}
-                  className="flex-1 flex items-center justify-center gap-1.5 h-[34px] rounded-[8px] bg-[#EEF2FF] hover:bg-[#4F6BED] text-[#4F6BED] hover:text-white font-medium text-[13px] transition-colors"
+                  className="flex-1 flex items-center justify-center gap-1.5 h-[34px] rounded-[8px] border border-[#4F6BED] text-[#4F6BED] hover:bg-[#EEF2FF] font-medium text-[13px] transition-colors"
                 >
                   <Eye size={13} />
                   Ver Time
                 </button>
 
-                <button className="w-[34px] h-[34px] flex items-center justify-center rounded-[8px] border border-[#D1D5DB] hover:bg-[#F9FAFB] transition-colors shrink-0">
-                  <Pencil size={12} color="#374151" />
+                <button className="w-[34px] h-[34px] flex items-center justify-center rounded-[8px] border border-[#10B981] hover:bg-[#F0FDF4] transition-colors shrink-0">
+                  <Pencil size={12} color="#10B981" />
                 </button>
 
                 <button
                   onClick={() => handleDelete(t.id)}
-                  className="w-[34px] h-[34px] flex items-center justify-center rounded-[8px] border border-[#D1D5DB] hover:bg-[#FEF2F2] transition-colors shrink-0"
+                  className="w-[34px] h-[34px] flex items-center justify-center rounded-[8px] border border-[#EF4444] hover:bg-[#FEF2F2] transition-colors shrink-0"
                   aria-label="Excluir time"
                 >
                   <Trash2 size={12} color="#EF4444" />

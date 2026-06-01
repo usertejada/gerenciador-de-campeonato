@@ -331,21 +331,21 @@ export default function FichaJogadorPage() {
             </div>
 
             {/* Ações rápidas */}
-            <div className="flex items-center gap-2 mt-5 pt-5 border-t border-[#F1F5F9]">
+            <div className="flex flex-col gap-2 mt-5 pt-5 border-t border-[#F1F5F9] min-[500px]:flex-row min-[500px]:items-center">
               <button
                 onClick={() =>
                   router.push(`/times/${timeId}/jogadores/${jogador.id}/editar`)
                 }
-                className="flex items-center gap-2 h-[36px] px-4 rounded-[8px] border border-[#D1D5DB] text-[#374151] text-[13px] font-medium hover:bg-[#F9FAFB] transition-colors"
+                className="flex items-center justify-center gap-2 h-[38px] px-4 rounded-[8px] border border-[#10B981] text-[#065F46] text-[13px] font-medium hover:bg-[#F0FDF4] transition-colors w-full min-[500px]:w-auto"
               >
-                <Pencil size={14} />
+                <Pencil size={14} color="#10B981" />
                 Editar
               </button>
               <button
                 onClick={() =>
                   router.push(`/times/${timeId}/jogadores/${jogador.id}/transferir`)
                 }
-                className="flex items-center gap-2 h-[36px] px-4 rounded-[8px] border border-[#C7D2FE] text-[#4F6BED] text-[13px] font-medium hover:bg-[#EEF2FF] transition-colors"
+                className="flex items-center justify-center gap-2 h-[38px] px-4 rounded-[8px] border border-[#C7D2FE] text-[#4F6BED] text-[13px] font-medium hover:bg-[#EEF2FF] transition-colors w-full min-[500px]:w-auto"
               >
                 <ArrowRightLeft size={14} />
                 Transferir
@@ -354,7 +354,7 @@ export default function FichaJogadorPage() {
                 onClick={() =>
                   router.push(`/times/${timeId}/jogadores/${jogador.id}/excluir`)
                 }
-                className="flex items-center gap-2 h-[36px] px-4 rounded-[8px] border border-[#FECACA] text-[#EF4444] text-[13px] font-medium hover:bg-[#FEF2F2] transition-colors ml-auto"
+                className="flex items-center justify-center gap-2 h-[38px] px-4 rounded-[8px] border border-[#FECACA] text-[#EF4444] text-[13px] font-medium hover:bg-[#FEF2F2] transition-colors w-full min-[500px]:w-auto min-[500px]:ml-auto"
               >
                 <Trash2 size={14} />
                 Excluir

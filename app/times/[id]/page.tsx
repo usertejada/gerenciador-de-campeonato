@@ -411,7 +411,7 @@ export default function TimeDetalhePage() {
               onClick={() =>
                 router.push(`/times/${time.id}/adicionar-jogador`)
               }
-              className="flex items-center gap-2 bg-[#4F6BED] hover:bg-[#3D5BD9] text-white font-semibold text-[14px] px-5 py-2.5 rounded-[10px] transition-colors shrink-0 self-start"
+              className="flex items-center justify-center gap-2 bg-[#4F6BED] hover:bg-[#3D5BD9] text-white font-semibold text-[14px] px-5 py-2.5 rounded-[10px] transition-colors shrink-0 self-center sm:self-start w-full sm:w-auto"
             >
               <UserPlus size={16} color="#FFFFFF" />
               Adicionar Jogador
@@ -478,97 +478,117 @@ export default function TimeDetalhePage() {
                 return (
                   <li
                     key={j.id}
-                    className="flex items-center gap-4 px-6 py-4 hover:bg-[#FAFBFF] transition-colors"
+                    className="flex flex-col gap-2 px-4 py-4 hover:bg-[#FAFBFF] transition-colors sm:flex-row sm:items-center sm:gap-4 sm:px-6"
                   >
-                    {/* Avatar */}
-                    <div className="w-10 h-10 rounded-full bg-[#EEF2FF] flex items-center justify-center shrink-0 overflow-hidden">
-                      {j.foto ? (
-                        <img
-                          src={j.foto}
-                          alt={j.nome}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <span className="text-[#4F6BED] font-bold text-[13px]">
-                          {iniciais}
-                        </span>
-                      )}
+                    {/* Linha superior: avatar + info */}
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
+                      {/* Avatar */}
+                      <div className="w-10 h-10 rounded-full bg-[#EEF2FF] flex items-center justify-center shrink-0 overflow-hidden">
+                        {j.foto ? (
+                          <img
+                            src={j.foto}
+                            alt={j.nome}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-[#4F6BED] font-bold text-[13px]">
+                            {iniciais}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Info */}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[#1E293B] font-semibold text-[14px] truncate">
+                          {j.nome}
+                        </p>
+                        <p className="text-[#94A3B8] text-[12px]">
+                          {j.documento} · {idade} anos
+                        </p>
+                      </div>
+
+                      {/* Stats e bandeira — só desktop */}
+                      <div className="hidden sm:flex items-center gap-3 mr-2">
+                        {(j.gols ?? 0) > 0 && (
+                          <span className="flex items-center gap-1 text-[#22C55E] text-[12px] font-semibold">
+                            ⚽ {j.gols}
+                          </span>
+                        )}
+                        {(j.cartoesAmarelos ?? 0) > 0 && (
+                          <span className="flex items-center gap-1 text-[12px] font-semibold text-[#F59E0B]">
+                            🟨 {j.cartoesAmarelos}
+                          </span>
+                        )}
+                        {(j.cartoesVermelhos ?? 0) > 0 && (
+                          <span className="flex items-center gap-1 text-[12px] font-semibold text-[#EF4444]">
+                            🟥 {j.cartoesVermelhos}
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-[20px] hidden sm:block" title={j.nacionalidade}>
+                        {bandeira}
+                      </span>
+
+                      {/* 4 ações — só desktop */}
+                      <div className="hidden sm:flex items-center gap-1 shrink-0">
+                        <button
+                          onClick={() => router.push(`/times/${time.id}/jogadores/${j.id}`)}
+                          title="Ver ficha do jogador"
+                          className="w-8 h-8 flex items-center justify-center rounded-[7px] text-[#4F6BED] hover:bg-[#EEF2FF] transition-colors"
+                        >
+                          <Eye size={16} />
+                        </button>
+                        <button
+                          onClick={() => router.push(`/times/${time.id}/jogadores/${j.id}/editar`)}
+                          title="Editar jogador"
+                          className="w-8 h-8 flex items-center justify-center rounded-[7px] text-[#64748B] hover:bg-[#F1F5F9] transition-colors"
+                        >
+                          <Pencil size={15} />
+                        </button>
+                        <button
+                          onClick={() => setModalTransferir(j)}
+                          title="Transferir jogador"
+                          className="w-8 h-8 flex items-center justify-center rounded-[7px] text-[#64748B] hover:bg-[#F1F5F9] transition-colors"
+                        >
+                          <ArrowRightLeft size={15} />
+                        </button>
+                        <button
+                          onClick={() => setModalExcluir(j)}
+                          title="Excluir jogador"
+                          className="w-8 h-8 flex items-center justify-center rounded-[7px] text-[#EF4444] hover:bg-[#FEF2F2] transition-colors"
+                        >
+                          <Trash2 size={15} />
+                        </button>
+                      </div>
                     </div>
 
-                    {/* Info */}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[#1E293B] font-semibold text-[14px] truncate">
-                        {j.nome}
-                      </p>
-                      <p className="text-[#94A3B8] text-[12px]">
-                        {j.documento} · {idade} anos
-                      </p>
-                    </div>
-
-                    {/* Stats resumidas */}
-                    <div className="hidden sm:flex items-center gap-3 mr-2">
-                      {(j.gols ?? 0) > 0 && (
-                        <span className="flex items-center gap-1 text-[#22C55E] text-[12px] font-semibold">
-                          ⚽ {j.gols}
-                        </span>
-                      )}
-                      {(j.cartoesAmarelos ?? 0) > 0 && (
-                        <span className="flex items-center gap-1 text-[12px] font-semibold text-[#F59E0B]">
-                          🟨 {j.cartoesAmarelos}
-                        </span>
-                      )}
-                      {(j.cartoesVermelhos ?? 0) > 0 && (
-                        <span className="flex items-center gap-1 text-[12px] font-semibold text-[#EF4444]">
-                          🟥 {j.cartoesVermelhos}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Bandeira */}
-                    <span className="text-[20px] hidden sm:block" title={j.nacionalidade}>
-                      {bandeira}
-                    </span>
-
-                    {/* 4 ações */}
-                    <div className="flex items-center gap-1 shrink-0">
-                      {/* Ver Detalhes */}
+                    {/* Linha inferior: 4 ícones — só mobile */}
+                    <div className="flex items-center gap-2 sm:hidden border-t border-[#F1F5F9] pt-2">
                       <button
-                        onClick={() =>
-                          router.push(`/times/${time.id}/jogadores/${j.id}`)
-                        }
+                        onClick={() => router.push(`/times/${time.id}/jogadores/${j.id}`)}
                         title="Ver ficha do jogador"
-                        className="w-8 h-8 flex items-center justify-center rounded-[7px] text-[#4F6BED] hover:bg-[#EEF2FF] transition-colors"
+                        className="flex-1 h-8 flex items-center justify-center rounded-[7px] text-[#4F6BED] hover:bg-[#EEF2FF] transition-colors"
                       >
                         <Eye size={16} />
                       </button>
-
-                      {/* Editar */}
                       <button
-                        onClick={() =>
-                          router.push(
-                            `/times/${time.id}/jogadores/${j.id}/editar`
-                          )
-                        }
+                        onClick={() => router.push(`/times/${time.id}/jogadores/${j.id}/editar`)}
                         title="Editar jogador"
-                        className="w-8 h-8 flex items-center justify-center rounded-[7px] text-[#64748B] hover:bg-[#F1F5F9] transition-colors"
+                        className="flex-1 h-8 flex items-center justify-center rounded-[7px] text-[#64748B] hover:bg-[#F1F5F9] transition-colors"
                       >
                         <Pencil size={15} />
                       </button>
-
-                      {/* Transferir */}
                       <button
                         onClick={() => setModalTransferir(j)}
                         title="Transferir jogador"
-                        className="w-8 h-8 flex items-center justify-center rounded-[7px] text-[#64748B] hover:bg-[#F1F5F9] transition-colors"
+                        className="flex-1 h-8 flex items-center justify-center rounded-[7px] text-[#64748B] hover:bg-[#F1F5F9] transition-colors"
                       >
                         <ArrowRightLeft size={15} />
                       </button>
-
-                      {/* Excluir */}
                       <button
                         onClick={() => setModalExcluir(j)}
                         title="Excluir jogador"
-                        className="w-8 h-8 flex items-center justify-center rounded-[7px] text-[#EF4444] hover:bg-[#FEF2F2] transition-colors"
+                        className="flex-1 h-8 flex items-center justify-center rounded-[7px] text-[#EF4444] hover:bg-[#FEF2F2] transition-colors"
                       >
                         <Trash2 size={15} />
                       </button>
