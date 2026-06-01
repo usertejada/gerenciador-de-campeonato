@@ -168,7 +168,7 @@ export function CardPartida({
         <button
           type="button"
           onClick={onFinalizar}
-          className="mt-auto w-full h-[34px] rounded-[8px] bg-[#EEF2FF] hover:bg-[#4F6BED] text-[#4F6BED] hover:text-white text-[12px] font-semibold transition-all flex items-center justify-center gap-1.5 border border-[#C7D2FE] hover:border-[#4F6BED]"
+          className="mt-auto w-full h-[34px] rounded-[8px] bg-white hover:bg-[#4F6BED] text-[#4F6BED] hover:text-white text-[12px] font-semibold transition-all flex items-center justify-center gap-1.5 border border-[#4F6BED] hover:border-[#4F6BED]"
         >
           <Flag size={12} />
           Finalizar Partida

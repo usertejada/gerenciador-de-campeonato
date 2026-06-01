@@ -36,10 +36,10 @@ export default function PartidasPage() {
 
   return (
     <div className="min-h-screen bg-[#F1F3F7] px-4 py-4 md:px-5 md:py-5 lg:px-6 lg:py-6">
-      <div className="max-w-[960px] mx-auto">
+      <div>
 
         {/* ── Cabeçalho ── */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div className="flex flex-col gap-3 mb-6 min-[640px]:flex-row min-[640px]:items-center min-[640px]:justify-between">
           <div>
             <h1 className="text-[#1E293B] font-extrabold text-[26px] leading-tight">Partidas</h1>
             <p className="text-[#94A3B8] text-[14px] mt-0.5">
@@ -93,7 +93,6 @@ export default function PartidasPage() {
               { value: "todas", label: "Todas" },
               { value: "agendada", label: "Agendadas" },
               { value: "em_andamento", label: "Em andamento" },
-              { value: "finalizada", label: "Finalizadas" },
             ] as { value: Filtro; label: string }[]
           ).map((f) => (
             <button
@@ -142,7 +141,7 @@ export default function PartidasPage() {
                 </div>
 
                 {/* Grid de cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {partidasGrupo.map((partida) => (
                     <CardPartida
                       key={partida.id}
