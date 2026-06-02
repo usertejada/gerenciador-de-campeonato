@@ -24,14 +24,14 @@ function ContadorGols({ value, onChange }: { value: number; onChange: (v: number
   return (
     <div className="flex items-center gap-2">
       <button type="button" onClick={() => onChange(Math.max(0, value - 1))}
-        className="w-[32px] h-[32px] rounded-[8px] border border-[#E5E7EB] bg-white text-[#374151] flex items-center justify-center hover:bg-[#F8FAFC] transition-colors">
+        className="w-[32px] h-[32px] rounded-[8px] border border-[#C4C9D4] bg-white text-[#374151] flex items-center justify-center hover:bg-[#F8FAFC] transition-colors">
         <Minus size={14} />
       </button>
       <span className="text-[#1E293B] font-extrabold text-[32px] w-[40px] text-center leading-none">
         {value}
       </span>
       <button type="button" onClick={() => onChange(value + 1)}
-        className="w-[32px] h-[32px] rounded-[8px] border border-[#E5E7EB] bg-white text-[#374151] flex items-center justify-center hover:bg-[#F8FAFC] transition-colors">
+        className="w-[32px] h-[32px] rounded-[8px] border border-[#C4C9D4] bg-white text-[#374151] flex items-center justify-center hover:bg-[#F8FAFC] transition-colors">
         <Plus size={14} />
       </button>
     </div>
@@ -130,10 +130,10 @@ export default function FinalizarPartidaPage() {
       <div className="max-w-[640px] mx-auto flex flex-col gap-5">
 
         {/* ── Card principal ── */}
-        <div className="bg-white rounded-[20px] border border-[#E5E7EB] shadow-[0_2px_12px_rgba(0,0,0,0.07)] overflow-hidden">
+        <div className="bg-white rounded-[20px] border border-[#C4C9D4] shadow-[0_2px_12px_rgba(0,0,0,0.07)] overflow-hidden">
 
           {/* Header */}
-          <div className="flex items-center gap-3 px-6 py-5 border-b border-[#F1F5F9] bg-[#FAFBFF]">
+          <div className="flex items-center gap-3 px-6 py-5 border-b border-[#D9DCE3] bg-[#FAFBFF]">
             <div className="w-9 h-9 rounded-full bg-[#EEF2FF] flex items-center justify-center shrink-0">
               <Flag size={15} color="#4F6BED" />
             </div>
@@ -146,17 +146,17 @@ export default function FinalizarPartidaPage() {
           <div className="p-5 flex flex-col gap-6">
 
             {/* ── Placar ── */}
-            <div className="bg-[#F8FAFC] rounded-[14px] border border-[#E5E7EB] p-5">
+            <div className="bg-[#F8FAFC] rounded-[14px] border border-[#C4C9D4] p-5">
               <p className="text-[#64748B] text-[11px] font-semibold uppercase tracking-wider mb-5 text-center">
                 Placar Final
               </p>
 
-              <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center justify-center gap-2">
 
                 {/* Time A */}
-                <div className="flex-1 flex flex-col items-center gap-1.5">
+                <div className="flex flex-col items-center gap-1.5 w-[120px]">
                   <EscudoTime nome={partida.timeA} escudo={partida.escudoA} size={48} />
-                  <span className="text-[#1E293B] font-bold text-[13px] text-center leading-tight">
+                  <span className="text-[#1E293B] font-bold text-[13px] text-center leading-tight w-full break-words">
                     {partida.timeA}
                   </span>
                   <div className="mt-2">
@@ -165,12 +165,12 @@ export default function FinalizarPartidaPage() {
                 </div>
 
                 {/* Separador × */}
-                <span className="text-[#CBD5E1] font-bold text-[24px] mb-2 shrink-0">×</span>
+                <span className="text-[#CBD5E1] font-bold text-[24px] mb-2 shrink-0 px-1">×</span>
 
                 {/* Time B */}
-                <div className="flex-1 flex flex-col items-center gap-1.5">
+                <div className="flex flex-col items-center gap-1.5 w-[120px]">
                   <EscudoTime nome={partida.timeB} escudo={partida.escudoB} size={48} />
-                  <span className="text-[#1E293B] font-bold text-[13px] text-center leading-tight">
+                  <span className="text-[#1E293B] font-bold text-[13px] text-center leading-tight w-full break-words">
                     {partida.timeB}
                   </span>
                   <div className="mt-2">
@@ -201,8 +201,8 @@ export default function FinalizarPartidaPage() {
               <div className="flex items-center gap-2 mb-3">
                 <select value={selectArtilheiro} onChange={(e) => setSelectArtilheiro(e.target.value)}
                   style={selectStyle}
-                  className="flex-1 h-[38px] rounded-[9px] border border-[#D1D5DB] bg-white text-[#1E293B] text-[13px] px-3 outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[#4F6BED]/10 transition-all appearance-none cursor-pointer">
-                  <option value="">Selecione o jogador...</option>
+                  className="flex-1 h-[38px] rounded-[9px] border border-[#C4C9D4] bg-white text-[#1E293B] text-[13px] px-3 outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[#4F6BED]/10 transition-all appearance-none cursor-pointer min-w-0">  
+                  <option value="">jogador...</option>
                   <optgroup label={`— ${partida.timeA} —`}>
                     {jogadoresA.map((j) => <option key={j.id} value={j.id}>{j.nome}</option>)}
                   </optgroup>
@@ -211,14 +211,15 @@ export default function FinalizarPartidaPage() {
                   </optgroup>
                 </select>
 
-                <div className="flex items-center gap-1 bg-[#F8FAFC] border border-[#E5E7EB] rounded-[9px] px-2 h-[38px]">
+                <div className="flex items-center gap-1 bg-[#F8FAFC] border border-[#C4C9D4] rounded-[9px] p-1 h-[38px]">
+
                   <button type="button" onClick={() => setGolsSelect((v) => Math.max(1, v - 1))}
-                    className="w-[22px] h-[22px] rounded-[6px] flex items-center justify-center hover:bg-white transition-colors text-[#64748B]">
+                    className="w-[15px] h-[22px] rounded-[6px] flex items-center justify-center hover:bg-white transition-colors text-[#64748B]">
                     <Minus size={11} />
                   </button>
-                  <span className="w-[20px] text-center text-[#1E293B] font-bold text-[13px]">{golsSelect}</span>
+                  <span className="w-[18px] text-center text-[#1E293B] font-bold text-[13px]">{golsSelect}</span>
                   <button type="button" onClick={() => setGolsSelect((v) => v + 1)}
-                    className="w-[22px] h-[22px] rounded-[6px] flex items-center justify-center hover:bg-white transition-colors text-[#64748B]">
+                    className="w-[15px] h-[22px] rounded-[6px] flex items-center justify-center hover:bg-white transition-colors text-[#64748B]">
                     <Plus size={11} />
                   </button>
                 </div>
@@ -233,7 +234,7 @@ export default function FinalizarPartidaPage() {
                 <div className="flex flex-col gap-1.5">
                   {artilheiros.map((a) => (
                     <div key={a.jogadorId}
-                      className="flex items-center justify-between bg-[#F8FAFC] border border-[#F1F5F9] rounded-[9px] px-3 py-2">
+                      className="flex items-center justify-between bg-[#F8FAFC] border border-[#D9DCE3] rounded-[9px] px-3 py-2">
                       <div className="flex items-center gap-2 min-w-0">
                         <div className="w-6 h-6 rounded-full bg-[#EEF2FF] flex items-center justify-center shrink-0">
                           <span className="text-[#4F6BED] text-[10px] font-bold">
@@ -266,8 +267,8 @@ export default function FinalizarPartidaPage() {
               <div className="flex items-center gap-2 mb-3">
                 <select value={selectCartao} onChange={(e) => setSelectCartao(e.target.value)}
                   style={selectStyle}
-                  className="flex-1 h-[38px] rounded-[9px] border border-[#D1D5DB] bg-white text-[#1E293B] text-[13px] px-3 outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[#4F6BED]/10 transition-all appearance-none cursor-pointer">
-                  <option value="">Selecione o jogador...</option>
+                  className="flex-1 h-[38px] rounded-[9px] border border-[#C4C9D4] bg-white text-[#1E293B] text-[13px] px-3 outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[#4F6BED]/10 transition-all appearance-none cursor-pointer">
+                  <option value="">Jogador...</option>
                   <optgroup label={`— ${partida.timeA} —`}>
                     {jogadoresA.map((j) => <option key={j.id} value={j.id}>{j.nome}</option>)}
                   </optgroup>
@@ -276,11 +277,11 @@ export default function FinalizarPartidaPage() {
                   </optgroup>
                 </select>
 
-                <div className="flex items-center gap-1 bg-[#F8FAFC] border border-[#E5E7EB] rounded-[9px] p-1 h-[38px]">
+                <div className="flex items-center gap-1 bg-[#F8FAFC] border border-[#C4C9D4] rounded-[9px] p-1 h-[38px]">
                   <button type="button" onClick={() => setTipoCartao("amarelo")} title="Amarelo"
-                    className={`w-[26px] h-[28px] rounded-[6px] border-2 transition-all ${tipoCartao === "amarelo" ? "bg-[#FDE68A] border-[#F59E0B]" : "bg-white border-[#E5E7EB] hover:border-[#FCD34D]"}`} />
+                    className={`w-[26px] h-[28px] rounded-[6px] border-2 transition-all ${tipoCartao === "amarelo" ? "bg-[#FDE68A] border-[#F59E0B]" : "bg-white border-[#C4C9D4] hover:border-[#FCD34D]"}`} />
                   <button type="button" onClick={() => setTipoCartao("vermelho")} title="Vermelho"
-                    className={`w-[26px] h-[28px] rounded-[6px] border-2 transition-all ${tipoCartao === "vermelho" ? "bg-[#FECACA] border-[#EF4444]" : "bg-white border-[#E5E7EB] hover:border-[#FCA5A5]"}`} />
+                    className={`w-[26px] h-[28px] rounded-[6px] border-2 transition-all ${tipoCartao === "vermelho" ? "bg-[#FECACA] border-[#EF4444]" : "bg-white border-[#C4C9D4] hover:border-[#FCA5A5]"}`} />
                 </div>
 
                 <button type="button" onClick={adicionarCartao} disabled={!selectCartao}
@@ -293,7 +294,7 @@ export default function FinalizarPartidaPage() {
                 <div className="flex flex-col gap-1.5">
                   {cartoes.map((c) => (
                     <div key={c.jogadorId}
-                      className="flex items-center justify-between bg-[#F8FAFC] border border-[#F1F5F9] rounded-[9px] px-3 py-2">
+                      className="flex items-center justify-between bg-[#F8FAFC] border border-[#D9DCE3] rounded-[9px] px-3 py-2">
                       <div className="flex items-center gap-2 min-w-0">
                         <div className="w-6 h-6 rounded-full bg-[#EEF2FF] flex items-center justify-center shrink-0">
                           <span className="text-[#4F6BED] text-[10px] font-bold">
@@ -330,13 +331,13 @@ export default function FinalizarPartidaPage() {
               </label>
               <textarea value={observacoes} onChange={(e) => setObservacoes(e.target.value)}
                 placeholder="Notas sobre a partida, incidentes, etc." rows={3}
-                className="w-full rounded-[10px] border border-[#D1D5DB] bg-white text-[#1E293B] text-[13px] px-3 py-2.5 outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[#4F6BED]/10 transition-all resize-none placeholder:text-[#CBD5E1]" />
+                className="w-full rounded-[10px] border border-[#C4C9D4] bg-white text-[#1E293B] text-[13px] px-3 py-2.5 outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[#4F6BED]/10 transition-all resize-none placeholder:text-[#CBD5E1]" />
             </div>
 
             {/* ── Botões ── */}
             <div className="flex items-center gap-3 pt-1">
               <button type="button" onClick={() => router.push("/partidas")}
-                className="flex-1 h-[44px] rounded-[10px] border border-[#D1D5DB] bg-white text-[#374151] text-[13px] font-semibold hover:bg-[#F9FAFB] transition-colors">
+                className="flex-1 h-[44px] rounded-[10px] border border-[#C4C9D4] bg-white text-[#374151] text-[13px] font-semibold hover:bg-[#F9FAFB] transition-colors">
                 Cancelar
               </button>
               <button type="button" onClick={handleConfirmar}

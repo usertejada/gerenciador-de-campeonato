@@ -185,6 +185,31 @@ function NovoTimeForm({ onVoltar }: { onVoltar: () => void }) {
             </div>
           </div>
 
+          {/* Tecnico + telefone */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[#374151] font-medium text-[13px]">Técnico</label>
+              <input
+                type="text"
+                placeholder="Ex: Águias SC"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                className="h-[38px] px-3 rounded-[8px] border border-[#D1D5DB] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[#374151] font-medium text-[13px]">Telefone</label>
+              <input
+                type="text"
+                placeholder="(00)00000-0000"
+                maxLength={3}
+                value={sigla}
+                onChange={(e) => setSigla(e.target.value.toUpperCase())}
+                className="h-[38px] px-3 rounded-[8px] border border-[#D1D5DB] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all tracking-widest font-bold"
+              />
+            </div>
+          </div>
+
           {/* Cidade + Campeonato */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">

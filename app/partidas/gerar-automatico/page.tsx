@@ -30,9 +30,9 @@ interface FormAuto {
 }
 
 const TEMPOS: { value: TempoJogo; label: string; desc: string }[] = [
-  { value: "45/45", label: "45 min / 45 min", desc: "Campo grande" },
-  { value: "20/20", label: "20 min / 20 min", desc: "Society / Futsal" },
-  { value: "15/15", label: "15 min / 15 min", desc: "Torneio rápido" },
+  { value: "45/45", label: "45/45", desc: "Campo grande" },
+  { value: "20/20", label: "20/20", desc: "Society / Futsal" },
+  { value: "15/15", label: "15/15", desc: "Torneio rápido" },
 ];
 
 const CAMPEONATOS = [

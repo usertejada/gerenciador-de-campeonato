@@ -120,7 +120,7 @@ function SelectTime({
       </button>
 
       {open && (
-        <div className="absolute z-50 mt-1 w-full bg-white border border-[#E5E7EB] rounded-[12px] shadow-[0_8px_24px_rgba(0,0,0,0.12)] overflow-hidden">
+        <div className="absolute z-50 mt-1 w-full bg-white border border-[#E5E7EB] rounded-[12px] shadow-[0_8px_24px_rgba(0,0,0,0.12)] overflow-hidden max-h-[200px] overflow-y-auto">
           {timesDisponiveis.length === 0 ? (
             <div className="px-4 py-3 text-[#94A3B8] text-[13px]">
               Nenhum time disponível
@@ -257,7 +257,7 @@ export default function GerarManualPage() {
         <div className="flex flex-col gap-4">
 
           {/* ── Seção 1: Informações gerais ── */}
-          <div className="bg-white rounded-[16px] border border-[#E5E7EB] shadow-[0_1px_4px_rgba(0,0,0,0.06)] p-5">
+          <div className="bg-white rounded-[16px] border border-[#D1D5DB] shadow-[0_1px_4px_rgba(0,0,0,0.06)] p-5">
             <h2 className="text-[#1E293B] font-bold text-[15px] mb-4 flex items-center gap-2">
               <Calendar size={15} color="#4F6BED" />
               Informações do Dia
@@ -334,7 +334,7 @@ export default function GerarManualPage() {
           </div>
 
           {/* ── Seção 2: Tempo de jogo ── */}
-          <div className="bg-white rounded-[16px] border border-[#E5E7EB] shadow-[0_1px_4px_rgba(0,0,0,0.06)] p-5">
+          <div className="bg-white rounded-[16px] border border-[#D1D5DB] shadow-[0_1px_4px_rgba(0,0,0,0.06)] p-5">
             <h2 className="text-[#1E293B] font-bold text-[15px] mb-4 flex items-center gap-2">
               <Clock size={15} color="#4F6BED" />
               Tempo de Jogo
@@ -393,7 +393,7 @@ export default function GerarManualPage() {
           </div>
 
           {/* ── Seção 3: Confrontos ── */}
-          <div className="bg-white rounded-[16px] border border-[#E5E7EB] shadow-[0_1px_4px_rgba(0,0,0,0.06)] p-5">
+          <div className="bg-white rounded-[16px] border border-[#D1D5DB] shadow-[0_1px_4px_rgba(0,0,0,0.06)] p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-[#1E293B] font-bold text-[15px] flex items-center gap-2">
                 <Users size={15} color="#4F6BED" />
@@ -428,7 +428,7 @@ export default function GerarManualPage() {
                         ? "border-[#FECACA] bg-[#FEF2F2]"
                         : c.timeAId && c.timeBId
                         ? "border-[#86EFAC] bg-[#F0FDF4]"
-                        : "border-[#E5E7EB] bg-[#FAFAFA]"
+                        : "border-[#CBD5E1] bg-[#FAFAFA]"
                     }`}
                   >
                     {/* Número do jogo */}
@@ -456,14 +456,14 @@ export default function GerarManualPage() {
                     </div>
 
                     {/* Selects dos times */}
-                    <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
+                    <div className="flex flex-col gap-2 min-[480px]:grid min-[480px]:grid-cols-[1fr_auto_1fr] min-[480px]:items-center">
                       <SelectTime
                         value={c.timeAId}
                         onChange={(id) => atualizarTimeA(c.id, id)}
                         placeholder="Time A"
                         excluir={c.timeBId ? [c.timeBId] : []}
                       />
-                      <div className="flex flex-col items-center gap-0.5">
+                      <div className="flex items-center justify-center gap-2 min-[480px]:flex-col min-[480px]:gap-0.5">
                         <Swords size={16} color="#C7D2FE" />
                         <span className="text-[#CBD5E1] text-[10px] font-bold">VS</span>
                       </div>
@@ -505,7 +505,7 @@ export default function GerarManualPage() {
 
           {/* ── Seção 4: Preview do cronograma ── */}
           {confrontosCompletos.length > 0 && data && horaInicial && (
-            <div className="bg-white rounded-[16px] border border-[#E5E7EB] shadow-[0_1px_4px_rgba(0,0,0,0.06)] overflow-hidden">
+            <div className="bg-white rounded-[16px] border border-[#D1D5DB] shadow-[0_1px_4px_rgba(0,0,0,0.06)] overflow-hidden">
               <button
                 type="button"
                 onClick={() => setPreviewAberto(!previewAberto)}

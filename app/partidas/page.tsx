@@ -68,7 +68,7 @@ export default function PartidasPage() {
         <div className="grid grid-cols-3 gap-3 mb-6">
           {[
             { label: "Agendadas", value: totalAgendadas, color: "#4F6BED" },
-            { label: "Em andamento", value: totalEmAndamento, color: "#D97706" },
+            { label: "E Curso", value: totalEmAndamento, color: "#D97706" },
             { label: "Finalizadas", value: totalFinalizadas, color: "#16A34A" },
           ].map((s) => (
             <div

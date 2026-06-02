@@ -114,8 +114,8 @@ export const mockPartidas: Partida[] = [
   },
   {
     id: 3,
-    timeA: "Dragões SC",
-    timeB: "Falcões EC",
+    timeA: "Atl. Amazonas FC",
+    timeB: "Amigos Cabelinho",
     escudoA: "🐉",
     escudoB: "🦅",
     data: "2025-06-08",
@@ -141,7 +141,7 @@ export const mockPartidas: Partida[] = [
   {
     id: 5,
     timeA: "Trovões EC",
-    timeB: "Falcões EC",
+    timeB: "Amigos Cabelinho",
     escudoA: "⚡",
     escudoB: "🦅",
     data: "2025-06-15",
