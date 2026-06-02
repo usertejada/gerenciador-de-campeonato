@@ -145,7 +145,7 @@ function NovoTimeForm({ onVoltar }: { onVoltar: () => void }) {
         Voltar
       </button>
 
-      <div className="max-w-[640px] mx-auto bg-white rounded-[12px] border border-[#E5E7EB] shadow-[0_2px_8px_rgba(0,0,0,0.08)] p-6">
+      <div className="max-w-[640px] mx-auto bg-white rounded-[12px] border border-[#C4C9D4] shadow-[0_2px_8px_rgba(0,0,0,0.08)] p-6">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-10 h-10 rounded-full bg-[#EEF2FF] flex items-center justify-center shrink-0">
             <Users size={18} color="#4F6BED" />
@@ -318,7 +318,7 @@ export default function TimesPage() {
           {times.map((t) => (
             <div
               key={t.id}
-              className="bg-white rounded-[12px] border border-[#E5E7EB] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.10)] transition-shadow flex flex-col gap-3"
+              className="bg-white rounded-[12px] border border-[#C4C9D4] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.10)] transition-shadow flex flex-col gap-3"
             >
               {/* Avatar + Nome + Cidade */}
               <div className="flex items-center gap-3">

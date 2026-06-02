@@ -150,7 +150,7 @@ export default function GerarAutomaticoPage() {
 
       <div className="max-w-[620px] mx-auto flex flex-col gap-5">
         {/* Cabeçalho */}
-        <div className="bg-white rounded-[14px] border border-[#E5E7EB] shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-6">
+        <div className="bg-white rounded-[14px] border border-[#C4C9D4] shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-6">
           <div className="flex items-center gap-3 mb-1">
             <div className="w-10 h-10 rounded-full bg-[#EEF2FF] flex items-center justify-center shrink-0">
               <Zap size={18} color="#4F6BED" />
@@ -167,7 +167,7 @@ export default function GerarAutomaticoPage() {
         </div>
 
         {/* Formulário */}
-        <div className="bg-white rounded-[14px] border border-[#E5E7EB] shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-6">
+        <div className="bg-white rounded-[14px] border border-[#C4C9D4] shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-6">
 
           {saved && (
             <div className="flex items-center gap-2 bg-[#F0FDF4] border border-[#86EFAC] text-[#16A34A] text-[13px] font-medium rounded-[8px] px-4 py-2.5 mb-5">

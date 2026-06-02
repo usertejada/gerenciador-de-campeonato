@@ -241,7 +241,7 @@ export default function FichaJogadorPage() {
 
       <div className="max-w-[680px] mx-auto flex flex-col gap-5">
         {/* Card de identidade */}
-        <div className="bg-white rounded-[16px] border border-[#E5E7EB] shadow-[0_2px_8px_rgba(0,0,0,0.08)] overflow-hidden">
+        <div className="bg-white rounded-[16px] border border-[#C4C9D4] shadow-[0_2px_8px_rgba(0,0,0,0.08)] overflow-hidden">
           {/* Barra de cor + status disciplinar */}
           <div
             className={`h-[6px] ${
@@ -364,7 +364,7 @@ export default function FichaJogadorPage() {
         </div>
 
         {/* Estatísticas */}
-        <div className="bg-white rounded-[16px] border border-[#E5E7EB] shadow-[0_2px_8px_rgba(0,0,0,0.08)] p-6">
+        <div className="bg-white rounded-[16px] border border-[#C4C9D4] shadow-[0_2px_8px_rgba(0,0,0,0.08)] p-6">
           <h2 className="text-[#1E293B] font-bold text-[16px] mb-4">
             Estatísticas na Temporada
           </h2>
@@ -422,7 +422,7 @@ export default function FichaJogadorPage() {
         </div>
 
         {/* Situação disciplinar detalhada */}
-        <div className="bg-white rounded-[16px] border border-[#E5E7EB] shadow-[0_2px_8px_rgba(0,0,0,0.08)] p-6">
+        <div className="bg-white rounded-[16px] border border-[#C4C9D4] shadow-[0_2px_8px_rgba(0,0,0,0.08)] p-6">
           <h2 className="text-[#1E293B] font-bold text-[16px] mb-4">
             Situação Disciplinar
           </h2>

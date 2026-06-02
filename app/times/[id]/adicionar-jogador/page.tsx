@@ -149,7 +149,7 @@ export default function AdicionarJogadorPage() {
         Voltar
       </button>
 
-      <div className="max-w-[560px] mx-auto bg-white rounded-[12px] border border-[#E5E7EB] shadow-[0_2px_8px_rgba(0,0,0,0.08)] p-6">
+      <div className="max-w-[560px] mx-auto bg-white rounded-[12px] border border-[#C4C9D4] shadow-[0_2px_8px_rgba(0,0,0,0.08)] p-6">
         {/* Cabeçalho */}
         <div className="flex items-center gap-3 mb-6">
           <div className="w-10 h-10 rounded-full bg-[#EEF2FF] flex items-center justify-center shrink-0">
@@ -183,7 +183,7 @@ export default function AdicionarJogadorPage() {
               placeholder="Ex: Carlos Eduardo Silva"
               value={form.nomeCompleto}
               onChange={(e) => set("nomeCompleto", e.target.value)}
-              className={`${fieldClass(!!errors.nomeCompleto)} w-full`}
+              className={`${fieldClass(!!errors.nomeCompleto)} w-full border border-[#C4C9D4]`}
             />
             {errors.nomeCompleto && (
               <span className="text-[#EF4444] text-[12px]">
@@ -202,7 +202,7 @@ export default function AdicionarJogadorPage() {
                 type="date"
                 value={form.dataNascimento}
                 onChange={(e) => set("dataNascimento", e.target.value)}
-                className={`${fieldClass(!!errors.dataNascimento)} w-full`}
+                className={`${fieldClass(!!errors.dataNascimento)} w-full border border-[#C4C9D4]`}
               />
               {errors.dataNascimento && (
                 <span className="text-[#EF4444] text-[12px]">
@@ -222,7 +222,7 @@ export default function AdicionarJogadorPage() {
                   onChange={(e) =>
                     set("nacionalidade", e.target.value as Nacionalidade)
                   }
-                  className={`${fieldClass(!!errors.nacionalidade)} w-full appearance-none bg-white pr-8`}
+                  className={`${fieldClass(!!errors.nacionalidade)} w-full appearance-none bg-white pr-8 border border-[#C4C9D4]`}
                 >
                   <option value="">Selecione...</option>
                   {NACIONALIDADES.map((n) => (
@@ -272,7 +272,7 @@ export default function AdicionarJogadorPage() {
                 disabled={!form.nacionalidade}
                 value={form.documento}
                 onChange={(e) => set("documento", e.target.value)}
-                className={`${fieldClass(!!errors.documento)} w-full disabled:bg-[#F9FAFB] disabled:text-[#9CA3AF] disabled:cursor-not-allowed`}
+                className={`${fieldClass(!!errors.documento)} w-full disabled:bg-[#F9FAFB] disabled:text-[#9CA3AF] disabled:cursor-not-allowed border border-[#C4C9D4]`}
               />
               {errors.documento && (
                 <span className="text-[#EF4444] text-[12px]">

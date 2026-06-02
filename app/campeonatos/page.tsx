@@ -121,7 +121,7 @@ export default function CampeonatosPage() {
           {campeonatos.map((c) => (
             <div
               key={c.id}
-              className="bg-white rounded-[12px] border border-[#E5E7EB] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.10)] transition-shadow flex flex-col gap-3"
+              className="bg-white rounded-[12px] border border-[#C4C9D4] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.10)] transition-shadow flex flex-col gap-3"
             >
               {/* Topo: avatar + nome + badge */}
               <div className="flex items-start gap-3">

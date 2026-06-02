@@ -71,7 +71,7 @@ export function CardPartida({
     partida.status === "em_andamento" || partida.status === "agendada";
 
   return (
-    <div className="bg-white rounded-[14px] border border-[#E5E7EB] shadow-[0_1px_4px_rgba(0,0,0,0.06)] p-4 flex flex-col gap-3 hover:border-[#C7D2FE] hover:shadow-md transition-all">
+    <div className="bg-white rounded-[14px] border border-[#C4C9D4] shadow-[0_1px_4px_rgba(0,0,0,0.06)] p-4 flex flex-col gap-3 hover:border-[#C7D2FE] hover:shadow-md transition-all">
 
       {/* Cabeçalho: status + hora */}
       <div className="flex items-center justify-between">
@@ -82,8 +82,8 @@ export function CardPartida({
           {cfg.icon}
           {cfg.label}
         </span>
-        <span className="flex items-center gap-1 text-[#94A3B8] text-[11px]">
-          <Clock size={10} color="#94A3B8" />
+        <span className="flex items-center gap-1 text-[#5d646d] text-[11px]">
+          <Clock size={10} color="#5d646d" />
           {partida.horaInicio} · {partida.duracao}
         </span>
       </div>
@@ -151,13 +151,13 @@ export function CardPartida({
 
       {/* Rodapé */}
       <div className="flex items-center gap-2 flex-wrap pt-2 border-t border-[#F1F5F9]">
-        <span className="flex items-center gap-1 text-[#94A3B8] text-[11px] truncate">
-          <Trophy size={10} color="#94A3B8" />
+        <span className="flex items-center gap-1 text-[#5d646d] text-[11px] truncate">
+          <Trophy size={10} color="#5d646d" />
           <span className="truncate">{partida.campeonato}</span>
         </span>
         {partida.local && (
-          <span className="flex items-center gap-1 text-[#94A3B8] text-[11px] truncate">
-            <MapPin size={10} color="#94A3B8" />
+          <span className="flex items-center gap-1 text-[#5d646d] text-[11px] truncate">
+            <MapPin size={10} color="#5d646d" />
             <span className="truncate">{partida.local}</span>
           </span>
         )}

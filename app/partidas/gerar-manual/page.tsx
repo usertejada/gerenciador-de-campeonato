@@ -40,9 +40,9 @@ const CAMPEONATOS = [
 ];
 
 const DURACOES = [
-  { label: "45min / 45min", sublabel: "Campo grande", value: "45/45" },
-  { label: "20min / 20min", sublabel: "Futsal / Society", value: "20/20" },
-  { label: "15min / 15min", sublabel: "Torneio rápido", value: "15/15" },
+  { label: "45/45", sublabel: "Campo grande", value: "45/45" },
+  { label: "20/20", sublabel: "Futsal / Society", value: "20/20" },
+  { label: "15/15", sublabel: "Torneio rápido", value: "15/15" },
 ];
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
@@ -234,30 +234,38 @@ export default function GerarManualPage() {
 
   return (
     <div className="min-h-screen bg-[#F1F3F7] px-4 py-4 md:px-5 md:py-5 lg:px-6 lg:py-6">
-      <div className="max-w-[720px] mx-auto">
+      {/* Voltar */}
+      <button
+        onClick={() => router.push("/partidas")}
+        className="flex items-center gap-2 text-[#1E293B] text-[14px] font-medium px-3 py-2 rounded-[8px] hover:bg-[#F1F5F9] transition-colors mb-6"
+      >
+        <ArrowLeft size={16} />
+        Voltar
+      </button>
 
-        {/* Cabeçalho */}
-        <div className="flex items-center gap-3 mb-6">
-          <button
-            onClick={() => router.push("/partidas")}
-            className="w-[36px] h-[36px] rounded-[10px] border border-[#E5E7EB] bg-white flex items-center justify-center hover:bg-[#F8FAFC] transition-colors shadow-sm"
-          >
-            <ArrowLeft size={16} color="#374151" />
-          </button>
-          <div>
-            <h1 className="text-[#1E293B] font-extrabold text-[22px] leading-tight">
-              Gerar Jogos Manuais
-            </h1>
-            <p className="text-[#94A3B8] text-[13px] mt-0.5">
-              Selecione os confrontos e configure os detalhes
-            </p>
-          </div>
-        </div>
+      <div className="max-w-[720px] mx-auto">
 
         <div className="flex flex-col gap-4">
 
+          {/* ── Cabeçalho ── */}
+          <div className="bg-white rounded-[14px] border border-[#C4C9D4] shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-6">
+            <div className="flex items-center gap-3 mb-1">
+              <div className="w-10 h-10 rounded-full bg-[#EEF2FF] flex items-center justify-center shrink-0">
+                <Swords size={18} color="#4F6BED" />
+              </div>
+              <div>
+                <h1 className="text-[#1E293B] font-bold text-[20px] leading-tight">
+                  Gerar Jogos Manuais
+                </h1>
+                <p className="text-[#94A3B8] text-[13px] mt-0.5">
+                  Selecione os confrontos e configure os detalhes
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* ── Seção 1: Informações gerais ── */}
-          <div className="bg-white rounded-[16px] border border-[#D1D5DB] shadow-[0_1px_4px_rgba(0,0,0,0.06)] p-5">
+          <div className="bg-white rounded-[16px] border border-[#C4C9D4] shadow-[0_1px_4px_rgba(0,0,0,0.06)] p-5">
             <h2 className="text-[#1E293B] font-bold text-[15px] mb-4 flex items-center gap-2">
               <Calendar size={15} color="#4F6BED" />
               Informações do Dia
@@ -273,7 +281,7 @@ export default function GerarManualPage() {
                   type="date"
                   value={data}
                   onChange={(e) => setData(e.target.value)}
-                  className="h-[42px] px-3 rounded-[10px] border border-[#D1D5DB] bg-white text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[#4F6BED]/10 transition-all"
+                  className="h-[42px] px-3 rounded-[10px] border border-[#C4C9D4] bg-white text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[#4F6BED]/10 transition-all"
                 />
               </div>
 
@@ -288,7 +296,7 @@ export default function GerarManualPage() {
                     type="time"
                     value={horaInicial}
                     onChange={(e) => setHoraInicial(e.target.value)}
-                    className="w-full h-[42px] pl-9 pr-3 rounded-[10px] border border-[#D1D5DB] bg-white text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[#4F6BED]/10 transition-all"
+                    className="w-full h-[42px] pl-9 pr-3 rounded-[10px] border border-[#C4C9D4] bg-white text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[#4F6BED]/10 transition-all"
                   />
                 </div>
               </div>
@@ -303,7 +311,7 @@ export default function GerarManualPage() {
                   <select
                     value={campeonato}
                     onChange={(e) => setCampeonato(e.target.value)}
-                    className="w-full h-[42px] pl-9 pr-3 rounded-[10px] border border-[#D1D5DB] bg-white text-[14px] text-[#1E293B] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[#4F6BED]/10 transition-all appearance-none cursor-pointer"
+                    className="w-full h-[42px] pl-9 pr-3 rounded-[10px] border border-[#C4C9D4] bg-white text-[14px] text-[#1E293B] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[#4F6BED]/10 transition-all appearance-none cursor-pointer"
                   >
                     <option value="">Selecionar campeonato</option>
                     {CAMPEONATOS.map((c) => (
@@ -326,7 +334,7 @@ export default function GerarManualPage() {
                     value={local}
                     onChange={(e) => setLocal(e.target.value)}
                     placeholder="Ex: Campo Principal"
-                    className="w-full h-[42px] pl-9 pr-3 rounded-[10px] border border-[#D1D5DB] bg-white text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[#4F6BED]/10 transition-all placeholder:text-[#CBD5E1]"
+                    className="w-full h-[42px] pl-9 pr-3 rounded-[10px] border border-[#C4C9D4] bg-white text-[#5d646d] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[#4F6BED]/10 transition-all placeholder:text-[#94A3B8]"
                   />
                 </div>
               </div>
@@ -334,7 +342,7 @@ export default function GerarManualPage() {
           </div>
 
           {/* ── Seção 2: Tempo de jogo ── */}
-          <div className="bg-white rounded-[16px] border border-[#D1D5DB] shadow-[0_1px_4px_rgba(0,0,0,0.06)] p-5">
+          <div className="bg-white rounded-[16px] border border-[#C4C9D4] shadow-[0_1px_4px_rgba(0,0,0,0.06)] p-5">
             <h2 className="text-[#1E293B] font-bold text-[15px] mb-4 flex items-center gap-2">
               <Clock size={15} color="#4F6BED" />
               Tempo de Jogo
@@ -393,7 +401,7 @@ export default function GerarManualPage() {
           </div>
 
           {/* ── Seção 3: Confrontos ── */}
-          <div className="bg-white rounded-[16px] border border-[#D1D5DB] shadow-[0_1px_4px_rgba(0,0,0,0.06)] p-5">
+          <div className="bg-white rounded-[16px] border border-[#C4C9D4] shadow-[0_1px_4px_rgba(0,0,0,0.06)] p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-[#1E293B] font-bold text-[15px] flex items-center gap-2">
                 <Users size={15} color="#4F6BED" />
@@ -496,7 +504,7 @@ export default function GerarManualPage() {
             <button
               type="button"
               onClick={adicionarConfronto}
-              className="mt-3 w-full h-[42px] rounded-[10px] border-2 border-dashed border-[#D1D5DB] text-[#94A3B8] text-[13px] font-semibold hover:border-[#4F6BED] hover:text-[#4F6BED] hover:bg-[#EEF2FF] transition-all flex items-center justify-center gap-2"
+              className="mt-3 w-full h-[42px] rounded-[10px] border-2 border-dashed border-[#C4C9D4] text-[#5d646d] text-[13px] font-semibold hover:border-[#4F6BED] hover:text-[#4F6BED] hover:bg-[#EEF2FF] transition-all flex items-center justify-center gap-2"
             >
               <Plus size={14} />
               Adicionar confronto

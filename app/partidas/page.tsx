@@ -128,7 +128,7 @@ export default function PartidasPage() {
               <div key={data}>
                 {/* Separador de data */}
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="flex items-center gap-2 bg-white border border-[#E5E7EB] rounded-full px-3 py-1 shadow-sm">
+                  <div className="flex items-center gap-2 bg-white border border-[#C4C9D4] rounded-full px-3 py-1 shadow-sm">
                     <Calendar size={13} color="#4F6BED" />
                     <span className="text-[#374151] text-[13px] font-semibold capitalize">
                       {formatarData(data)}

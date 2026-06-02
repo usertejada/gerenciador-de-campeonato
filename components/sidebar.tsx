@@ -9,10 +9,13 @@ import {
   BarChart2,
   Settings,
   Plus,
+  CircleDot,
   Menu,
   X,
   Bell,
+  Medal,
   ChevronLeft,
+  Clock as ClockIcon,
 } from "lucide-react";
 import { useSidebar } from "@/components/sidebar-context";
 
@@ -32,6 +35,9 @@ const navItems: NavItem[] = [
   { label: "Campeonatos",   icon: Trophy,           href: "/campeonatos" },
   { label: "Times",         icon: Users,            href: "/times" },
   { label: "Partidas",      icon: Calendar,         href: "/partidas" },
+  { label: "Histórico",     icon: ClockIcon,        href: "/historico" },
+  { label: "Classificação", icon: Medal,            href: "/classificacao" },
+  { label: "Artilheiro",    icon: CircleDot,            href: "/artilheiro" },
   { label: "Estatísticas",  icon: BarChart2,        href: "/estatisticas" },
   { label: "Configurações", icon: Settings,         href: "/configuracoes" },
 ];

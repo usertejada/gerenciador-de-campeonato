@@ -18,7 +18,7 @@ export default function NovoCampeonatoPage() {
       </button>
 
       {/* Container do formulário */}
-      <div className="max-w-[640px] mx-auto bg-white rounded-[12px] border border-[#E5E7EB] shadow-[0_2px_8px_rgba(0,0,0,0.08)] p-6">
+      <div className="max-w-[640px] mx-auto bg-white rounded-[12px] border border-[#C4C9D4] shadow-[0_2px_8px_rgba(0,0,0,0.08)] p-6">
         {/* Header do form */}
         <div className="flex items-center gap-3 mb-6">
           <div className="w-10 h-10 rounded-full bg-[#EEF2FF] flex items-center justify-center shrink-0">
@@ -37,7 +37,7 @@ export default function NovoCampeonatoPage() {
             <input
               type="text"
               placeholder="Ex: Copa Verão 2025"
-              className="h-[38px] px-3 rounded-[8px] border border-[#D1D5DB] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all"
+              className="h-[38px] px-3 rounded-[8px] border border-[#C4C9D4] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all"
             />
           </div>
 
@@ -47,7 +47,7 @@ export default function NovoCampeonatoPage() {
             <textarea
               placeholder="Descreva o campeonato..."
               rows={4}
-              className="px-3 py-2 rounded-[8px] border border-[#D1D5DB] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all resize-vertical min-h-[96px]"
+              className="px-3 py-2 rounded-[8px] border border-[#C4C9D4] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all resize-vertical min-h-[96px]"
             />
           </div>
 
@@ -58,7 +58,7 @@ export default function NovoCampeonatoPage() {
               <label className="text-[#374151] font-medium text-[13px]">Data de Início</label>
               <input
                 type="date"
-                className="h-[38px] px-3 rounded-[8px] border border-[#D1D5DB] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all"
+                className="h-[38px] px-3 rounded-[8px] border border-[#C4C9D4] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all"
               />
             </div>
 
@@ -67,7 +67,7 @@ export default function NovoCampeonatoPage() {
               <label className="text-[#374151] font-medium text-[13px]">Data de Término</label>
               <input
                 type="date"
-                className="h-[38px] px-3 rounded-[8px] border border-[#D1D5DB] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all"
+                className="h-[38px] px-3 rounded-[8px] border border-[#C4C9D4] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all"
               />
             </div>
 
@@ -75,7 +75,7 @@ export default function NovoCampeonatoPage() {
             <div className="flex flex-col gap-1.5">
               <label className="text-[#374151] font-medium text-[13px]">Formato</label>
               <div className="relative">
-                <select className="w-full h-[38px] px-3 rounded-[8px] border border-[#D1D5DB] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all appearance-none bg-white">
+                <select className="w-full h-[38px] px-3 rounded-[8px] border border-[#C4C9D4] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all appearance-none bg-white">
                   <option value="">Selecione...</option>
                   <option>Mata-mata</option>
                   <option>Pontos corridos</option>
@@ -95,7 +95,7 @@ export default function NovoCampeonatoPage() {
                 type="number"
                 placeholder="Ex: 16"
                 min={2}
-                className="h-[38px] px-3 rounded-[8px] border border-[#D1D5DB] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all"
+                className="h-[38px] px-3 rounded-[8px] border border-[#C4C9D4] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all"
               />
             </div>
 
@@ -105,7 +105,7 @@ export default function NovoCampeonatoPage() {
               <input
                 type="text"
                 placeholder="Ex: Arena Central"
-                className="h-[38px] px-3 rounded-[8px] border border-[#D1D5DB] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all"
+                className="h-[38px] px-3 rounded-[8px] border border-[#C4C9D4] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all"
               />
             </div>
 
@@ -113,7 +113,7 @@ export default function NovoCampeonatoPage() {
             <div className="flex flex-col gap-1.5">
               <label className="text-[#374151] font-medium text-[13px]">Status</label>
               <div className="relative">
-                <select className="w-full h-[38px] px-3 rounded-[8px] border border-[#D1D5DB] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all appearance-none bg-white">
+                <select className="w-full h-[38px] px-3 rounded-[8px] border border-[#C4C9D4] text-[#1E293B] text-[14px] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all appearance-none bg-white">
                   <option value="">Selecione...</option>
                   <option>Pendente</option>
                   <option>Em Andamento</option>

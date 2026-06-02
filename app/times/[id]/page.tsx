@@ -349,7 +349,7 @@ export default function TimeDetalhePage() {
 
       <div className="max-w-[860px] mx-auto">
         {/* Card principal do time */}
-        <div className="bg-white rounded-[16px] border border-[#E5E7EB] shadow-[0_2px_8px_rgba(0,0,0,0.08)] overflow-hidden mb-6">
+        <div className="bg-white rounded-[16px] border border-[#C4C9D4] shadow-[0_2px_8px_rgba(0,0,0,0.08)] overflow-hidden mb-6">
           <div className="h-[6px] bg-[#4F6BED]" />
           <div className="p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
             {/* Escudo */}
@@ -420,7 +420,7 @@ export default function TimeDetalhePage() {
         </div>
 
         {/* Lista de jogadores */}
-        <div className="bg-white rounded-[16px] border border-[#E5E7EB] shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+        <div className="bg-white rounded-[16px] border border-[#C4C9D4] shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
           <div className="flex items-center justify-between px-6 py-4 border-b border-[#E5E7EB]">
             <div className="flex items-center gap-2">
               <Users size={16} color="#4F6BED" />
