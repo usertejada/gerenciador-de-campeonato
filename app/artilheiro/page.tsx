@@ -54,32 +54,32 @@ function PodiumCard({ artilheiro, pos }: { artilheiro: Artilheiro; pos: number }
   }[pos]!;
 
   return (
-    <div className={`${configs.bg} border ${configs.border} ${configs.shadow} rounded-[16px] p-4 flex flex-col items-center gap-2 relative`}>
+    <div className={`${configs.bg} border ${configs.border} ${configs.shadow} rounded-[16px] p-2 sm:p-4 flex flex-col items-center gap-1.5 sm:gap-2 relative w-full`}>
       {/* Badge posicao */}
       <div className={`absolute -top-3 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full ${configs.badge} flex items-center justify-center font-extrabold text-[13px] shadow-sm`}>
         {pos}
       </div>
 
       {/* Avatar */}
-      <div className={`${configs.size} rounded-full bg-white border-2 ${configs.border} flex items-center justify-center mt-2 shrink-0`}>
-        <span className={configs.fontSize}>{artilheiro.escudoTime}</span>
+      <div className={`${pos === 1 ? "w-14 h-14 sm:w-20 sm:h-20" : "w-12 h-12 sm:w-16 sm:h-16"} rounded-full bg-white border-2 ${configs.border} flex items-center justify-center mt-2 shrink-0`}>
+        <span className={pos === 1 ? "text-[24px] sm:text-[32px]" : "text-[20px] sm:text-[26px]"}>{artilheiro.escudoTime}</span>
       </div>
 
       {/* Info */}
-      <div className="text-center">
-        <p className={`text-[#1E293B] font-bold ${configs.nameSz} leading-tight`}>{artilheiro.nome}</p>
-        <p className="text-[#64748B] text-[11px] mt-0.5">{artilheiro.time}</p>
+      <div className="text-center w-full px-1">
+        <p className={`text-[#1E293B] font-bold ${pos === 1 ? "text-[13px] sm:text-[16px]" : "text-[11px] sm:text-[14px]"} leading-tight truncate`}>{artilheiro.nome}</p>
+        <p className="text-[#64748B] text-[10px] sm:text-[11px] mt-0.5 truncate">{artilheiro.time}</p>
       </div>
 
       {/* Gols */}
-      <div className="flex items-center gap-1.5 bg-white/70 rounded-full px-3 py-1">
-        <Target size={13} color="#4F6BED" />
-        <span className="text-[#4F6BED] font-extrabold text-[18px] leading-none">{artilheiro.gols}</span>
-        <span className="text-[#94A3B8] text-[11px]">gols</span>
+      <div className="flex items-center gap-1 sm:gap-1.5 bg-white/70 rounded-full px-2 sm:px-3 py-1">
+        <Target size={11} color="#4F6BED" />
+        <span className="text-[#4F6BED] font-extrabold text-[15px] sm:text-[18px] leading-none">{artilheiro.gols}</span>
+        <span className="text-[#94A3B8] text-[10px] sm:text-[11px]">gols</span>
       </div>
 
-      {/* Stats extras */}
-      <div className="flex items-center gap-3 text-center">
+      {/* Stats extras — ocultas em mobile pequeno, visíveis sm+ */}
+      <div className="hidden sm:flex items-center gap-3 text-center">
         <div>
           <p className="text-[#374151] font-semibold text-[12px]">{artilheiro.jogos}</p>
           <p className="text-[#94A3B8] text-[10px]">jogos</p>
@@ -147,12 +147,12 @@ export default function ArtilheirosPage() {
             Ranking de goleadores por campeonato
           </p>
         </div>
-        <div className="relative self-start min-[640px]:self-auto">
+        <div className="relative self-start min-[640px]:self-auto w-full min-[640px]:w-auto">
           <Trophy size={13} color="#94A3B8" className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
           <select
             value={campeonato}
             onChange={(e) => setCampeonato(e.target.value)}
-            className="h-[38px] pl-8 pr-8 rounded-[8px] border border-[#D1D5DB] bg-white text-[#1E293B] text-[13px] font-medium outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all appearance-none cursor-pointer"
+            className="h-[38px] w-full min-[640px]:w-auto pl-8 pr-8 rounded-[8px] border border-[#D1D5DB] bg-white text-[#1E293B] text-[13px] font-medium outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all appearance-none cursor-pointer"
           >
             {CAMPEONATOS.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
@@ -165,17 +165,17 @@ export default function ArtilheirosPage() {
       {/* Podio top 3 */}
       {top3.length >= 3 && (
         <div className="mb-6">
-          <div className="flex items-end gap-3 justify-center">
+          <div className="flex items-end gap-2 sm:gap-3 justify-center w-full">
             {/* 2o lugar — menor */}
-            <div className="flex-1 max-w-[180px]">
+            <div className="flex-1 min-w-0 max-w-[110px] sm:max-w-[180px]">
               <PodiumCard artilheiro={top3[1]} pos={2} />
             </div>
             {/* 1o lugar — maior, centralizado */}
-            <div className="flex-1 max-w-[200px] -mt-4">
+            <div className="flex-1 min-w-0 max-w-[130px] sm:max-w-[200px] -mt-4">
               <PodiumCard artilheiro={top3[0]} pos={1} />
             </div>
             {/* 3o lugar — menor */}
-            <div className="flex-1 max-w-[180px]">
+            <div className="flex-1 min-w-0 max-w-[110px] sm:max-w-[180px]">
               <PodiumCard artilheiro={top3[2]} pos={3} />
             </div>
           </div>
@@ -186,7 +186,7 @@ export default function ArtilheirosPage() {
       <div className="bg-white rounded-[12px] border border-[#C4C9D4] shadow-[0_1px_3px_rgba(0,0,0,0.06)] overflow-hidden mb-4">
 
         {/* Cabecalho */}
-        <div className="flex items-center gap-3 px-4 py-2.5 bg-[#F8FAFC] border-b border-[#E5E7EB]">
+        <div className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 bg-[#F8FAFC] border-b border-[#E5E7EB]">
           <span className="w-7 text-[#94A3B8] text-[11px] font-semibold uppercase tracking-wide">#</span>
           <span className="flex-1 text-[#94A3B8] text-[11px] font-semibold uppercase tracking-wide">Jogador</span>
           <span className="w-[120px] hidden sm:block text-[#94A3B8] text-[11px] font-semibold uppercase tracking-wide text-center">Progresso</span>
@@ -205,7 +205,7 @@ export default function ArtilheirosPage() {
           return (
             <div
               key={a.id}
-              className={`flex items-center gap-3 px-4 py-3 border-b border-[#F1F5F9] last:border-0 hover:bg-[#F8FAFC] transition-colors ${
+              className={`flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 border-b border-[#F1F5F9] last:border-0 hover:bg-[#F8FAFC] transition-colors ${
                 posGlobal === 1 ? "bg-[#FEFCE8]" : ""
               }`}
             >
