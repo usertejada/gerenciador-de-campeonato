@@ -153,8 +153,16 @@ export default function CampeonatosPage() {
             >
               {/* Topo */}
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#EEF2FF] flex items-center justify-center shrink-0">
-                  <Trophy size={18} color="#4F6BED" />
+                <div className="w-10 h-10 rounded-full bg-[#EEF2FF] flex items-center justify-center shrink-0 overflow-hidden">
+                  {c.logo_url ? (
+                    <img
+                      src={c.logo_url}
+                      alt={`Logo ${c.nome}`}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Trophy size={18} color="#4F6BED" />
+                  )}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-2">
@@ -184,7 +192,9 @@ export default function CampeonatosPage() {
 
               {/* Botões */}
               <div className="flex items-center gap-2 pt-1 border-t border-[#E5E7EB] mt-auto">
-                <button className="flex-1 flex items-center justify-center gap-1.5 h-[34px] rounded-[8px] border border-[#10B981] text-[#065F46] font-medium text-[13px] hover:bg-[#F0FDF4] transition-colors">
+                <button
+                  onClick={() => router.push(`/campeonatos/${c.id}/editar`)}
+                  className="flex-1 flex items-center justify-center gap-1.5 h-[34px] rounded-[8px] border border-[#10B981] text-[#065F46] font-medium text-[13px] hover:bg-[#F0FDF4] transition-colors">
                   <Pencil size={12} color="#10B981" />
                   Editar
                 </button>
