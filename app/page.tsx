@@ -11,8 +11,8 @@ import {
   UserPlus,
   Settings,
   BarChart2,
+  Search,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 // ── Dados ──────────────────────────────────────────────────────────────
 const stats = [
@@ -66,7 +66,6 @@ function Badge({ status }: { status: BadgeStatus }) {
 
 // ── Dashboard ───────────────────────────────────────────────────────────
 export default function DashboardPage() {
-  const router = useRouter();
 
   return (
     <div className="min-h-screen bg-[#F1F3F7] px-4 py-4 md:px-5 md:py-5 lg:px-6 lg:py-6">
@@ -81,13 +80,14 @@ export default function DashboardPage() {
             Visão geral dos seus campeonatos
           </p>
         </div>
-        <button
-          onClick={() => router.push("/novo-campeonato")}
-          className="flex items-center justify-center gap-2 bg-[#4F6BED] hover:bg-[#3D5BD9] text-white font-semibold text-[14px] px-5 py-2.5 rounded-[10px] transition-colors self-start min-[640px]:self-auto min-[640px]:shrink-0"
-        >
-          <Trophy size={16} color="#FFFFFF" />
-          Novo Campeonato
-        </button>
+        <div className="relative w-full min-[640px]:w-[280px] shrink-0">
+          <Search size={15} color="#94A3B8" className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <input
+            type="text"
+            placeholder="Buscar campeonato, time..."
+            className="w-full h-[38px] pl-9 pr-4 rounded-[8px] border border-[#D1D5DB] bg-white text-[#1E293B] text-[13px] placeholder:text-[#94A3B8] outline-none focus:border-[#4F6BED] focus:ring-2 focus:ring-[rgba(79,107,237,0.2)] transition-all"
+          />
+        </div>
       </div>
 
       {/* Cards de estatísticas */}

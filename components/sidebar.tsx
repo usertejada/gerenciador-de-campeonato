@@ -9,8 +9,9 @@ import {
   BarChart2,
   Settings,
   Plus,
-  CircleDot,
+  Goal,
   Menu,
+  CircleAlert,
   X,
   Bell,
   Medal,
@@ -37,8 +38,8 @@ const navItems: NavItem[] = [
   { label: "Partidas",      icon: Calendar,         href: "/partidas" },
   { label: "Histórico",     icon: ClockIcon,        href: "/historico" },
   { label: "Classificação", icon: Medal,            href: "/classificacao" },
-  { label: "Artilheiro",    icon: CircleDot,            href: "/artilheiro" },
-  { label: "Estatísticas",  icon: BarChart2,        href: "/estatisticas" },
+  { label: "Artilheiro",    icon: Goal,            href: "/artilheiro" },
+  { label: "Pendências",    icon: CircleAlert,        href: "/pendencias" },
   { label: "Configurações", icon: Settings,         href: "/configuracoes" },
 ];
 
