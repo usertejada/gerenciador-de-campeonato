@@ -144,20 +144,22 @@ export default function CartoesTab() {
       </div>
 
       {/* ── Sub-tabs ─────────────────────────────────────────────────── */}
-      <div className="flex gap-1.5 bg-white border border-[#C4C9D4] rounded-[10px] p-1 shadow-[0_1px_3px_rgba(0,0,0,0.04)] w-fit">
-        {SUB_TABS.map(({ id, label }) => (
-          <button
-            key={id}
-            onClick={() => setSubTab(id)}
-            className={`px-3 py-1.5 rounded-[7px] text-[12px] font-semibold transition-all ${
-              subTab === id
-                ? "bg-[#4F6BED] text-white shadow-sm"
-                : "text-[#64748B] hover:text-[#1E293B]"
-            }`}
-          >
-            {label}
-          </button>
-        ))}
+      <div className="overflow-x-auto pb-0.5 -mx-0.5 px-0.2">
+        <div className="flex bg-white border border-[#C4C9D4] rounded-[10px] p-1 shadow-[0_1px_3px_rgba(0,0,0,0.04)] w-fit min-w-full sm:min-w-0">
+          {SUB_TABS.map(({ id, label }) => (
+            <button
+              key={id}
+              onClick={() => setSubTab(id)}
+              className={`flex-1 sm:flex-none whitespace-nowrap px-3 py-1.5 rounded-[7px] text-[12px] font-semibold transition-all ${
+                subTab === id
+                  ? "bg-[#4F6BED] text-white shadow-sm"
+                  : "text-[#64748B] hover:text-[#1E293B]"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* ── Tabela de cartões ────────────────────────────────────────── */}
