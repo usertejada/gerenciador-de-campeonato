@@ -3,7 +3,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Square, Ban, ShieldOff } from "lucide-react";
+import { Square, Ban, ShieldOff, AlertTriangle } from "lucide-react";
 
 // ── Tipos ────────────────────────────────────────────────────────────────────
 type TipoCartao = "Amarelo" | "Vermelho";
@@ -104,12 +104,13 @@ export default function CartoesTab() {
 
   const totalAmarelos  = CARTOES_MOCK.filter((c) => c.tipo === "Amarelo").length;
   const totalVermelhos = CARTOES_MOCK.filter((c) => c.tipo === "Vermelho").length;
+  const totalAcumulo   = CARTOES_MOCK.filter((c) => c.tipo === "Amarelo" && (c.acumulados ?? 0) >= 3).length;
 
   return (
     <div className="flex flex-col gap-4">
 
       {/* ── Cards de resumo ──────────────────────────────────────────── */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
 
         <div className="bg-white rounded-[12px] border border-[#C4C9D4] shadow-[0_1px_3px_rgba(0,0,0,0.06)] p-3 flex flex-col gap-1">
           <div className="flex items-center gap-2">
@@ -139,6 +140,16 @@ export default function CartoesTab() {
             <span className="text-[#64748B] text-[12px] font-medium">Suspensos</span>
           </div>
           <p className="text-[#1E293B] font-extrabold text-[22px] leading-tight">{SUSPENSOS_MOCK.length}</p>
+        </div>
+
+        <div className="bg-white rounded-[12px] border border-[#C4C9D4] shadow-[0_1px_3px_rgba(0,0,0,0.06)] p-3 flex flex-col gap-1">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-[8px] bg-[#FFF7ED] flex items-center justify-center">
+              <AlertTriangle size={13} color="#EA580C" />
+            </div>
+            <span className="text-[#64748B] text-[12px] font-medium">Em acúmulo</span>
+          </div>
+          <p className="text-[#EA580C] font-extrabold text-[22px] leading-tight">{totalAcumulo}</p>
         </div>
 
       </div>

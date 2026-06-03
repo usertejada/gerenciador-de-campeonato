@@ -3,7 +3,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { DollarSign, Clock, CheckCircle, AlertCircle } from "lucide-react";
+import { DollarSign, Clock, CheckCircle, AlertCircle, TrendingDown } from "lucide-react";
 
 // ── Tipos ────────────────────────────────────────────────────────────────────
 type StatusPagamento = "Pendente" | "Atrasado" | "Pago";
@@ -71,6 +71,7 @@ export default function PagamentosTab() {
   const totalAberto  = PAGAMENTOS_MOCK.filter((p) => p.status !== "Pago").reduce((s, p) => s + p.valor, 0);
   const totalAtrasado = PAGAMENTOS_MOCK.filter((p) => p.status === "Atrasado").reduce((s, p) => s + p.valor, 0);
   const qtdPendente  = PAGAMENTOS_MOCK.filter((p) => p.status === "Pendente").length;
+  const totalPago     = PAGAMENTOS_MOCK.filter((p) => p.status === "Pago").reduce((s, p) => s + p.valor, 0);
 
   const fmt = (v: number) =>
     v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -79,7 +80,7 @@ export default function PagamentosTab() {
     <div className="flex flex-col gap-4">
 
       {/* ── Cards de resumo ──────────────────────────────────────────── */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
 
         <div className="bg-white rounded-[12px] border border-[#C4C9D4] shadow-[0_1px_3px_rgba(0,0,0,0.06)] p-3 flex flex-col gap-1">
           <div className="flex items-center gap-2">
@@ -109,6 +110,16 @@ export default function PagamentosTab() {
             <span className="text-[#64748B] text-[12px] font-medium">Pendentes</span>
           </div>
           <p className="text-[#CA8A04] font-extrabold text-[22px] leading-tight">{qtdPendente}</p>
+        </div>
+
+        <div className="bg-white rounded-[12px] border border-[#C4C9D4] shadow-[0_1px_3px_rgba(0,0,0,0.06)] p-3 flex flex-col gap-1">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-[8px] bg-[#DCFCE7] flex items-center justify-center">
+              <CheckCircle size={13} color="#16A34A" />
+            </div>
+            <span className="text-[#64748B] text-[12px] font-medium">Pagos</span>
+          </div>
+          <p className="text-[#16A34A] font-extrabold text-[17px] leading-tight">{fmt(totalPago)}</p>
         </div>
 
       </div>
