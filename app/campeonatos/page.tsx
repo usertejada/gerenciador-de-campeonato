@@ -3,27 +3,23 @@
 import { useState, useEffect } from "react";
 import { Trophy, Calendar, Users, Plus, Pencil, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 
 type BadgeStatus = "Em Andamento" | "Pendente" | "Finalizado";
 
 interface Campeonato {
-  id: number;
+  id: string;
   nome: string;
+  descricao: string;
   formato: string;
   status: BadgeStatus;
-  desc: string;
-  data: string;
-  times: string;
+  data_inicio: string | null;
+  data_fim: string | null;
+  local: string | null;
+  numero_times: number | null;
+  logo_url: string | null;
+  created_at: string;
 }
-
-const mockData: Campeonato[] = [
-  { id: 1, nome: "Copa Verão 2025",    formato: "Mata-mata",          status: "Em Andamento", desc: "Torneio de futebol society com 16 times participantes.",         data: "Jan–Mar 2025", times: "16 times" },
-  { id: 2, nome: "Liga Empresarial",   formato: "Pontos corridos",    status: "Em Andamento", desc: "Campeonato interno entre departamentos da empresa.",              data: "Fev–Abr 2025", times: "8 times"  },
-  { id: 3, nome: "Torneio Relâmpago",  formato: "Eliminatório",       status: "Pendente",     desc: "Competição rápida de fim de semana, formato eliminatório.",      data: "Mar 2025",     times: "12 times" },
-  { id: 4, nome: "Champions Interno",  formato: "Grupos + Mata-mata", status: "Finalizado",   desc: "Edição especial anual de futebol entre colaboradores.",          data: "Dez 2024",     times: "20 times" },
-  { id: 5, nome: "Taça Primavera",     formato: "Pontos corridos",    status: "Pendente",     desc: "Campeonato sazonal com times da região metropolitana.",          data: "Abr–Jun 2025", times: "10 times" },
-  { id: 6, nome: "Super Copa 2024",    formato: "Mata-mata",          status: "Finalizado",   desc: "Confronto entre os campeões dos torneios anteriores do ano.",    data: "Nov 2024",     times: "4 times"  },
-];
 
 const badgeMap: Record<BadgeStatus, { bg: string; text: string }> = {
   "Em Andamento": { bg: "#D1FAE5", text: "#065F46" },
@@ -70,27 +66,57 @@ function EmptyState({ onNovo }: { onNovo: () => void }) {
   );
 }
 
+function formatarPeriodo(inicio: string | null, fim: string | null): string {
+  if (!inicio) return "—";
+  const fmt = (d: string) =>
+    new Date(d).toLocaleDateString("pt-BR", { month: "short", year: "numeric" });
+  return fim ? `${fmt(inicio)} – ${fmt(fim)}` : fmt(inicio);
+}
+
 export default function CampeonatosPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [campeonatos, setCampeonatos] = useState<Campeonato[]>([]);
+  const [erro, setErro] = useState<string | null>(null);
 
   useEffect(() => {
-    const t = setTimeout(() => {
-      setCampeonatos(mockData);
+    async function fetchCampeonatos() {
+      const { data, error } = await supabase
+        .from("campeonatos")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        setErro("Erro ao carregar campeonatos.");
+        console.error(error);
+      } else {
+        setCampeonatos(data as Campeonato[]);
+      }
+
       setLoading(false);
-    }, 800);
-    return () => clearTimeout(t);
+    }
+
+    fetchCampeonatos();
   }, []);
 
-  function handleDelete(id: number) {
+  async function handleDelete(id: string) {
+    const { error } = await supabase
+      .from("campeonatos")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error("Erro ao excluir:", error);
+      return;
+    }
+
     setCampeonatos((prev) => prev.filter((c) => c.id !== id));
   }
 
   return (
     <div className="min-h-screen bg-[#F1F3F7] px-4 py-4 md:px-5 md:py-5 lg:px-6 lg:py-6">
 
-      {/* Header — empilhado no celular, lado a lado no tablet/desktop */}
+      {/* Header */}
       <div className="flex flex-col gap-3 mb-6 min-[640px]:flex-row min-[640px]:items-start min-[640px]:justify-between">
         <div>
           <h1 className="text-[#1E293B] font-extrabold text-[22px] lg:text-[28px] leading-tight">
@@ -112,6 +138,8 @@ export default function CampeonatosPage() {
       {/* Conteúdo */}
       {loading ? (
         <Spinner />
+      ) : erro ? (
+        <p className="text-red-500 text-[14px]">{erro}</p>
       ) : campeonatos.length === 0 ? (
         <div className="bg-white rounded-[12px] border border-[#E5E7EB] shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
           <EmptyState onNovo={() => router.push("/novo-campeonato")} />
@@ -123,7 +151,7 @@ export default function CampeonatosPage() {
               key={c.id}
               className="bg-white rounded-[12px] border border-[#C4C9D4] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.10)] transition-shadow flex flex-col gap-3"
             >
-              {/* Topo: avatar + nome + badge */}
+              {/* Topo */}
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-full bg-[#EEF2FF] flex items-center justify-center shrink-0">
                   <Trophy size={18} color="#4F6BED" />
@@ -140,17 +168,17 @@ export default function CampeonatosPage() {
               </div>
 
               {/* Descrição */}
-              <p className="text-[#94A3B8] text-[12px] line-clamp-2">{c.desc}</p>
+              <p className="text-[#94A3B8] text-[12px] line-clamp-2">{c.descricao}</p>
 
               {/* Metadados */}
               <div className="flex items-center gap-4">
                 <span className="flex items-center gap-1 text-[#94A3B8] text-[11px]">
                   <Calendar size={12} color="#94A3B8" />
-                  {c.data}
+                  {formatarPeriodo(c.data_inicio, c.data_fim)}
                 </span>
                 <span className="flex items-center gap-1 text-[#94A3B8] text-[11px]">
                   <Users size={12} color="#94A3B8" />
-                  {c.times}
+                  {c.numero_times ? `${c.numero_times} times` : "—"}
                 </span>
               </div>
 
