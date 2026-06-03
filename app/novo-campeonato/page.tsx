@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft, Save, Trophy } from "lucide-react";
+import { ArrowLeft, Save, Trophy, ImagePlus, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
@@ -32,12 +32,58 @@ export default function NovoCampeonatoPage() {
   const [form, setForm] = useState<FormData>(initialForm);
   const [salvando, setSalvando] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [logoPreview, setLogoPreview] = useState<string | null>(null);
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function handleLogoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setErro("Selecione um arquivo de imagem válido.");
+      return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      setErro("A imagem deve ter no máximo 2MB.");
+      return;
+    }
+
+    setErro(null);
+    setLogoFile(file);
+    setLogoPreview(URL.createObjectURL(file));
+  }
+
+  function handleRemoveLogo() {
+    setLogoFile(null);
+    setLogoPreview(null);
+  }
+
+  async function uploadLogo(file: File): Promise<string | null> {
+    const ext = file.name.split(".").pop();
+    const fileName = `${crypto.randomUUID()}.${ext}`;
+
+    const { error } = await supabase.storage
+      .from("logos-campeonatos")
+      .upload(fileName, file, { contentType: file.type });
+
+    if (error) {
+      console.error("Erro no upload:", error);
+      return null;
+    }
+
+    const { data } = supabase.storage
+      .from("logos-campeonatos")
+      .getPublicUrl(fileName);
+
+    return data.publicUrl;
   }
 
   async function handleSalvar() {
@@ -57,6 +103,17 @@ export default function NovoCampeonatoPage() {
     setErro(null);
     setSalvando(true);
 
+    let logo_url: string | null = null;
+
+    if (logoFile) {
+      logo_url = await uploadLogo(logoFile);
+      if (!logo_url) {
+        setErro("Erro ao fazer upload da logo. Tente novamente.");
+        setSalvando(false);
+        return;
+      }
+    }
+
     const { error } = await supabase.from("campeonatos").insert({
       nome: form.nome.trim(),
       descricao: form.descricao.trim() || null,
@@ -66,6 +123,7 @@ export default function NovoCampeonatoPage() {
       data_fim: form.data_fim || null,
       local: form.local.trim() || null,
       numero_times: form.numero_times ? parseInt(form.numero_times) : null,
+      logo_url,
     });
 
     setSalvando(false);
@@ -110,6 +168,39 @@ export default function NovoCampeonatoPage() {
               {erro}
             </div>
           )}
+
+          {/* Logo */}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[#374151] font-medium text-[13px]">Logo do Campeonato</label>
+            {logoPreview ? (
+              <div className="relative w-full h-[140px] rounded-[10px] border border-[#C4C9D4] overflow-hidden">
+                <img
+                  src={logoPreview}
+                  alt="Preview da logo"
+                  className="w-full h-full object-contain bg-[#F8FAFC]"
+                />
+                <button
+                  onClick={handleRemoveLogo}
+                  className="absolute top-2 right-2 w-7 h-7 rounded-full bg-white border border-[#E5E7EB] shadow flex items-center justify-center hover:bg-[#FEF2F2] transition-colors"
+                  aria-label="Remover logo"
+                >
+                  <X size={14} color="#EF4444" />
+                </button>
+              </div>
+            ) : (
+              <label className="flex flex-col items-center justify-center gap-2 w-full h-[140px] rounded-[10px] border-2 border-dashed border-[#C4C9D4] cursor-pointer hover:border-[#4F6BED] hover:bg-[#F8FAFF] transition-all">
+                <ImagePlus size={28} color="#94A3B8" />
+                <span className="text-[#94A3B8] text-[13px]">Clique para enviar uma imagem</span>
+                <span className="text-[#CBD5E1] text-[11px]">PNG, JPG, WEBP • Máx. 2MB</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleLogoChange}
+                />
+              </label>
+            )}
+          </div>
 
           {/* Nome */}
           <div className="flex flex-col gap-1.5">
