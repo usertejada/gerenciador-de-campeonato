@@ -58,7 +58,7 @@ function SidebarContent({
   const initial = userName.charAt(0).toUpperCase();
 
   return (
-    <div className="flex flex-col h-full overflow-hidden">
+    <div className="flex flex-col h-full min-h-0 overflow-hidden">
       {/* Cabeçalho */}
       <div className="flex items-center gap-3 px-4 py-5 shrink-0">
         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#4F6BED] shrink-0">
@@ -79,7 +79,7 @@ function SidebarContent({
       </div>
 
       {/* Navegação */}
-      <nav className="flex-1 px-2 overflow-y-auto overflow-x-hidden">
+      <nav className="flex-1 min-h-0 px-2 overflow-y-auto overflow-x-hidden">
         {!collapsed && (
           <p className="text-[#8B8FA8] font-semibold text-[10px] tracking-[0.08em] uppercase mt-6 mb-1 px-2 whitespace-nowrap">
             Navegação
@@ -185,8 +185,9 @@ export function Sidebar({
     <div>
       {/* ── DESKTOP ─────────────────────────────────────────────── */}
       <aside
+        style={{ height: "100dvh" }}
         className={[
-          "hidden lg:flex flex-col fixed left-0 top-0 h-screen bg-[#1E2139] border-r border-[#2D3154] z-40 transition-all duration-300",
+          "hidden lg:flex flex-col fixed left-0 top-0 bg-[#1E2139] border-r border-[#2D3154] z-40 transition-all duration-300",
           collapsed ? "w-[72px]" : "w-64",
         ].join(" ")}
       >
@@ -254,8 +255,9 @@ export function Sidebar({
 
         {/* Drawer */}
         <aside
-          className="fixed top-0 left-0 h-screen w-64 bg-[#1E2139] flex flex-col transition-transform duration-300 ease-in-out z-[60]"
+          className="fixed top-0 left-0 w-64 bg-[#1E2139] flex flex-col transition-transform duration-300 ease-in-out z-[60]"
           style={{
+            height: "100dvh",
             transform: mobileOpen ? "translateX(0)" : "translateX(-100%)",
             pointerEvents: mobileOpen ? "auto" : "none",
           }}
