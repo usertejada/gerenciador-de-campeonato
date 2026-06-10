@@ -1,11 +1,19 @@
-// app/times/[id]/adicionar-jogador/page.tsx
+// app/times/[id]/jogadores/[jogadorId]/editar/page.tsx
 
 "use client";
 
-import { useState, useRef } from "react";
-import { ArrowLeft, Save, User, Flag, Upload, X, Phone } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { ArrowLeft, Save, User, Flag, Upload, X, Phone, Trash2 } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
-import { criarJogador, uploadFotoJogador } from "@/lib/services/times";
+import {
+  buscarJogador,
+  atualizarJogador,
+  uploadFotoJogador,
+  type Jogador,
+} from "@/lib/services/times";
+import { supabase } from "@/lib/supabase";
+
+// ─── Tipos e constantes (mesmo padrão do adicionar-jogador) ───────────────────
 
 type Nacionalidade = "Brasileiro" | "Colombiano" | "Peruano";
 
@@ -59,10 +67,25 @@ function fieldClass(error?: boolean) {
   }`;
 }
 
-export default function AdicionarJogadorPage() {
+function Spinner() {
+  return (
+    <div className="flex items-center justify-center min-h-[300px]">
+      <div className="w-8 h-8 rounded-full border-4 border-[#E5E7EB] border-t-[#4F6BED] animate-spin" />
+    </div>
+  );
+}
+
+// ─── Página ───────────────────────────────────────────────────────────────────
+
+export default function EditarJogadorPage() {
   const router = useRouter();
   const params = useParams();
   const timeId = params?.id as string;
+  const jogadorId = params?.jogadorId as string;
+
+  // ── Estados ────────────────────────────────────────────────────────────────
+  const [loadingDados, setLoadingDados] = useState(true);
+  const [jogadorOriginal, setJogadorOriginal] = useState<Jogador | null>(null);
 
   const [form, setForm] = useState<JogadorForm>({
     nomeCompleto: "",
@@ -77,14 +100,43 @@ export default function AdicionarJogadorPage() {
   const [saved, setSaved] = useState(false);
   const [erroGeral, setErroGeral] = useState<string | null>(null);
 
-  // Foto 3x4
+  // Foto
   const fotoInputRef = useRef<HTMLInputElement>(null);
   const [fotoPreview, setFotoPreview] = useState<string | null>(null);
   const [fotoArquivo, setFotoArquivo] = useState<File | null>(null);
   const [fotoError, setFotoError] = useState<string | null>(null);
+  const [removerFotoExistente, setRemoverFotoExistente] = useState(false);
 
   const nacionalidadeInfo = NACIONALIDADES.find((n) => n.value === form.nacionalidade);
 
+  // ── Carrega dados do jogador ───────────────────────────────────────────────
+  useEffect(() => {
+    if (!jogadorId) return;
+    async function carregar() {
+      setLoadingDados(true);
+      try {
+        const jogador = await buscarJogador(jogadorId);
+        if (!jogador) throw new Error("Jogador não encontrado.");
+        setJogadorOriginal(jogador);
+        setForm({
+          nomeCompleto: jogador.nome ?? "",
+          dataNascimento: jogador.data_nascimento ?? "",
+          documento: jogador.documento ?? "",
+          nacionalidade: (jogador.nacionalidade as Nacionalidade) ?? "",
+          telefone: jogador.telefone ?? "",
+        });
+        if (jogador.foto_url) {
+          setFotoPreview(jogador.foto_url);
+        }
+      } catch {
+        setErroGeral("Não foi possível carregar os dados do jogador.");
+      }
+      setLoadingDados(false);
+    }
+    carregar();
+  }, [jogadorId]);
+
+  // ── Helpers de formulário ──────────────────────────────────────────────────
   function set<K extends keyof JogadorForm>(key: K, value: JogadorForm[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
     setErrors((prev) => ({ ...prev, [key]: undefined }));
@@ -93,7 +145,6 @@ export default function AdicionarJogadorPage() {
   function handleFotoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-
     if (!["image/jpeg", "image/png"].includes(file.type)) {
       setFotoError("Apenas arquivos JPG ou PNG são aceitos.");
       return;
@@ -102,9 +153,9 @@ export default function AdicionarJogadorPage() {
       setFotoError("A foto deve ter no máximo 2 MB.");
       return;
     }
-
     setFotoError(null);
     setFotoArquivo(file);
+    setRemoverFotoExistente(false);
     const reader = new FileReader();
     reader.onload = () => setFotoPreview(reader.result as string);
     reader.readAsDataURL(file);
@@ -115,6 +166,10 @@ export default function AdicionarJogadorPage() {
     setFotoPreview(null);
     setFotoArquivo(null);
     setFotoError(null);
+    // Se havia foto salva no banco, marca para remoção
+    if (jogadorOriginal?.foto_url) {
+      setRemoverFotoExistente(true);
+    }
   }
 
   function validate(): boolean {
@@ -127,46 +182,74 @@ export default function AdicionarJogadorPage() {
     return Object.keys(e).length === 0;
   }
 
+  // ── Salvar ─────────────────────────────────────────────────────────────────
   async function handleSalvar() {
     if (!validate()) return;
-
     setSaving(true);
     setErroGeral(null);
 
     try {
-      // 1. Cria o jogador no banco primeiro (sem foto)
-      const jogador = await criarJogador({
+      let foto_url: string | undefined = undefined; // undefined = não altera
+
+      // Remove foto antiga do storage se foi pedido
+      if (removerFotoExistente && jogadorOriginal?.foto_url) {
+        const match = jogadorOriginal.foto_url.match(/fotos-jogadores\/(.+)$/);
+        if (match) {
+          await supabase.storage.from("fotos-jogadores").remove([match[1]]);
+        }
+        // foto_url permanece undefined; passamos foto_url: undefined para limpar via spread abaixo
+      }
+
+      // Faz upload da nova foto se selecionada
+      if (fotoArquivo) {
+        // Remove a anterior antes de enviar a nova
+        if (jogadorOriginal?.foto_url && !removerFotoExistente) {
+          const match = jogadorOriginal.foto_url.match(/fotos-jogadores\/(.+)$/);
+          if (match) {
+            await supabase.storage.from("fotos-jogadores").remove([match[1]]);
+          }
+        }
+        try {
+          foto_url = await uploadFotoJogador(fotoArquivo, jogadorId);
+        } catch {
+          console.warn("Falha ao fazer upload da foto, dados salvos sem atualizar foto.");
+        }
+      }
+
+      await atualizarJogador(jogadorId, {
         nome: form.nomeCompleto.trim(),
         data_nascimento: form.dataNascimento || undefined,
         documento: form.documento.trim() || undefined,
         nacionalidade: form.nacionalidade || undefined,
         telefone: form.telefone.trim() || undefined,
-        time_id: timeId,
+        // foto_url só entra no payload se houve mudança
+        ...(removerFotoExistente && !fotoArquivo
+          ? { foto_url: undefined }   // remove: envia undefined (o service deve tratar ou usar null internamente)
+          : foto_url !== undefined
+          ? { foto_url }              // nova foto
+          : {}),                      // sem mudança: não passa a chave
       });
-
-      // 2. Se tem foto, faz upload e atualiza o registro
-      if (fotoArquivo) {
-        try {
-          const fotoUrl = await uploadFotoJogador(fotoArquivo, jogador.id);
-          // Atualiza o jogador com a URL da foto
-          const { atualizarJogador } = await import("@/lib/services/times");
-          await atualizarJogador(jogador.id, { foto_url: fotoUrl });
-        } catch {
-          // Foto falhou mas jogador foi criado — não bloqueia o fluxo
-          console.warn("Falha ao fazer upload da foto, jogador criado sem foto.");
-        }
-      }
 
       setSaved(true);
       setTimeout(() => router.push(`/times/${timeId}`), 1200);
     } catch (err) {
-      const msg = err instanceof Error ? err.message : "Erro ao salvar jogador.";
+      const msg = err instanceof Error ? err.message : "Erro ao salvar alterações.";
       setErroGeral(msg);
     } finally {
       setSaving(false);
     }
   }
 
+  // ── Render: carregando ─────────────────────────────────────────────────────
+  if (loadingDados) {
+    return (
+      <div className="min-h-screen bg-[#F1F3F7]">
+        <Spinner />
+      </div>
+    );
+  }
+
+  // ── Render principal ───────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-[#F1F3F7] px-4 py-4 md:px-5 md:py-5 lg:px-6 lg:py-6">
       {/* Voltar */}
@@ -186,20 +269,22 @@ export default function AdicionarJogadorPage() {
           </div>
           <div>
             <h1 className="text-[#1E293B] font-bold text-[22px] leading-tight">
-              Adicionar Jogador
+              Editar Jogador
             </h1>
-            <p className="text-[#94A3B8] text-[13px]">Preencha os dados do atleta</p>
+            <p className="text-[#94A3B8] text-[13px]">
+              {jogadorOriginal?.nome ?? "Atualize os dados do atleta"}
+            </p>
           </div>
         </div>
 
-        {/* Feedback de sucesso */}
+        {/* Feedback sucesso */}
         {saved && (
           <div className="flex items-center gap-2 bg-[#F0FDF4] border border-[#86EFAC] text-[#16A34A] text-[13px] font-medium rounded-[8px] px-4 py-2.5 mb-5">
-            ✓ Jogador cadastrado! Redirecionando…
+            ✓ Dados atualizados! Redirecionando…
           </div>
         )}
 
-        {/* Feedback de erro */}
+        {/* Feedback erro */}
         {erroGeral && (
           <div className="flex items-center gap-2 bg-[#FEF2F2] border border-[#FECACA] text-[#DC2626] text-[13px] font-medium rounded-[8px] px-4 py-2.5 mb-5">
             ✕ {erroGeral}
@@ -217,7 +302,7 @@ export default function AdicionarJogadorPage() {
               placeholder="Ex: Carlos Eduardo Silva"
               value={form.nomeCompleto}
               onChange={(e) => set("nomeCompleto", e.target.value)}
-              className={`${fieldClass(!!errors.nomeCompleto)} w-full border border-[#C4C9D4]`}
+              className={`${fieldClass(!!errors.nomeCompleto)} w-full`}
             />
             {errors.nomeCompleto && (
               <span className="text-[#EF4444] text-[12px]">{errors.nomeCompleto}</span>
@@ -234,7 +319,7 @@ export default function AdicionarJogadorPage() {
                 type="date"
                 value={form.dataNascimento}
                 onChange={(e) => set("dataNascimento", e.target.value)}
-                className={`${fieldClass(!!errors.dataNascimento)} w-full border border-[#C4C9D4]`}
+                className={`${fieldClass(!!errors.dataNascimento)} w-full`}
               />
               {errors.dataNascimento && (
                 <span className="text-[#EF4444] text-[12px]">{errors.dataNascimento}</span>
@@ -250,7 +335,7 @@ export default function AdicionarJogadorPage() {
                 <select
                   value={form.nacionalidade}
                   onChange={(e) => set("nacionalidade", e.target.value as Nacionalidade)}
-                  className={`${fieldClass(!!errors.nacionalidade)} w-full appearance-none bg-white pr-8 border border-[#C4C9D4]`}
+                  className={`${fieldClass(!!errors.nacionalidade)} w-full appearance-none bg-white pr-8`}
                 >
                   <option value="">Selecione...</option>
                   {NACIONALIDADES.map((n) => (
@@ -297,7 +382,7 @@ export default function AdicionarJogadorPage() {
                 disabled={!form.nacionalidade}
                 value={form.documento}
                 onChange={(e) => set("documento", e.target.value)}
-                className={`${fieldClass(!!errors.documento)} w-full disabled:bg-[#F9FAFB] disabled:text-[#9CA3AF] disabled:cursor-not-allowed border border-[#C4C9D4]`}
+                className={`${fieldClass(!!errors.documento)} w-full disabled:bg-[#F9FAFB] disabled:text-[#9CA3AF] disabled:cursor-not-allowed`}
               />
               {errors.documento && (
                 <span className="text-[#EF4444] text-[12px]">{errors.documento}</span>
@@ -324,7 +409,7 @@ export default function AdicionarJogadorPage() {
                 }
                 value={form.telefone}
                 onChange={(e) => set("telefone", e.target.value)}
-                className={`${fieldClass(!!errors.telefone)} w-full`}
+                className={`${fieldClass()} w-full`}
               />
             </div>
           </div>
@@ -339,7 +424,7 @@ export default function AdicionarJogadorPage() {
             <div className="flex items-start gap-4">
               {/* Preview */}
               <div className="w-[72px] h-[96px] rounded-[8px] overflow-hidden border-2 border-[#C7D2FE] bg-[#EEF2FF] flex items-center justify-center shrink-0">
-                {fotoPreview ? (
+                {fotoPreview && !removerFotoExistente ? (
                   <img
                     src={fotoPreview}
                     alt="Foto do jogador"
@@ -358,7 +443,7 @@ export default function AdicionarJogadorPage() {
               >
                 <Upload size={18} color="#4F6BED" />
                 <span className="text-[#4F6BED] font-medium text-[13px] text-center leading-tight">
-                  {fotoArquivo ? fotoArquivo.name : "Clique para enviar a foto"}
+                  {fotoArquivo ? fotoArquivo.name : "Clique para trocar a foto"}
                 </span>
                 {!fotoArquivo && (
                   <span className="text-[#94A3B8] text-[11px] text-center leading-tight">
@@ -380,16 +465,17 @@ export default function AdicionarJogadorPage() {
               <span className="text-[#EF4444] text-[12px]">{fotoError}</span>
             )}
 
-            {fotoArquivo && !fotoError && (
-              <button
-                type="button"
-                onClick={handleRemoverFoto}
-                className="flex items-center gap-1 text-[#EF4444] text-[12px] font-medium self-start hover:underline"
-              >
-                <X size={12} />
-                Remover foto
-              </button>
-            )}
+            {(fotoArquivo || (jogadorOriginal?.foto_url && !removerFotoExistente)) &&
+              !fotoError && (
+                <button
+                  type="button"
+                  onClick={handleRemoverFoto}
+                  className="flex items-center gap-1 text-[#EF4444] text-[12px] font-medium self-start hover:underline"
+                >
+                  <Trash2 size={12} />
+                  Remover foto
+                </button>
+              )}
 
             <span className="text-[#94A3B8] text-[11px]">
               A foto será usada no cartão de identificação do jogador
@@ -417,7 +503,7 @@ export default function AdicionarJogadorPage() {
               ) : (
                 <>
                   <Save size={16} color="#FFFFFF" />
-                  Salvar
+                  Salvar Alterações
                 </>
               )}
             </button>
